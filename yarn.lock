@@ -2115,6 +2115,16 @@
     "@ethersproject/properties" "^5.2.0"
     "@ethersproject/strings" "^5.2.0"
 
+"@fontsource/mirza@^4.4.2":
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/@fontsource/mirza/-/mirza-4.4.2.tgz#b22455bb4b826e408fe282325381cb7ab6725403"
+  integrity sha512-YM24GJPNYxWhnoz9oxrzf29fxK/iBqos960LyuLBnZLa59l22CU4a9YP6Vxj0M7W85ihf/WtPrIKInxll1qbQg==
+
+"@fontsource/uncial-antiqua@^4.4.2":
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/@fontsource/uncial-antiqua/-/uncial-antiqua-4.4.2.tgz#2fc149fe98a7227875efa7c04779989db3ea3762"
+  integrity sha512-up0iQm6b8MBfnP7SYUDmlxKIn973W2lNRveAs9LGD1tsquchdeZP+DbIXrpNQSKTlCI21Bv/UaHDbAkHB6PtBQ==
+
 "@hapi/address@2.x.x":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"

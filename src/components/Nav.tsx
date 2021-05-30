@@ -1,6 +1,6 @@
 import React from 'react';
-import { Flex, Heading, Stack, Box, Image } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Flex, Heading, Link, Stack, Box, Image } from '@chakra-ui/react';
+import { Link as RouterLink } from 'react-router-dom';
 import Swords from '../assets/swords-white.svg';
 
 const links = [{ link: '/', label: 'Home' }];
@@ -11,8 +11,8 @@ interface NavLinkProps {
 }
 
 const NavLink: React.FC<NavLinkProps> = ({ link, label }: NavLinkProps) => (
-  <Heading
-    as={Link}
+  <Link
+    as={RouterLink}
     display='block'
     w='100%'
     to={link}
@@ -22,7 +22,7 @@ const NavLink: React.FC<NavLinkProps> = ({ link, label }: NavLinkProps) => (
     _hover={{ bg: 'whiteAlpha.200' }}
   >
     {label.toUpperCase()}
-  </Heading>
+  </Link>
 );
 
 const Nav = () => {
