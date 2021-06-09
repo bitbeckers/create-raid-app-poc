@@ -5,7 +5,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { theme } from './theme';
 
 import { RaidContextProvider } from './contexts/raidContext';
-import Nav from './components/Nav';
+import Header from './components/Header';
 
 //routes
 import Home from './routes/Home';
@@ -15,7 +15,7 @@ const App = () => {
     <RaidContextProvider>
       <ChakraProvider theme={theme}>
         <HashRouter>
-          <Nav />
+          <Header>Raid Guild App Template</Header>
           <Switch>
             <Route exact path='/'>
               <Home />
