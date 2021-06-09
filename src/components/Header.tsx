@@ -15,6 +15,8 @@ const Header: React.FC = ({ children }) => (
         {children}
       </Heading>
     </Box>
+
+    <Spacer />
   </Flex>
 );
 
