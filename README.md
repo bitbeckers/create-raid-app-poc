@@ -1,5 +1,8 @@
 Live Demo on Netlify: https://infallible-wiles-fd5269.netlify.app
 
+Storybook: `yarn storybook`
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
