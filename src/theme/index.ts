@@ -38,6 +38,17 @@ export const theme = extendTheme({
       },
     },
 
+    Drawer: {
+      parts: ['dialog'],
+      baseStyle: {
+        dialog: {
+          bg: 'primaryAlpha.500',
+          border: '1px solid',
+          borderColor: 'primaryAlpha.800',
+        },
+      },
+    },
+
     Input: {
       defaultProps: {
         variant: 'rg',
