@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Button } from '../Button';
-import logo from '../../assets/swords-black-mid.svg';
+import { Button } from '../../atoms/Button';
+import logo from '../../../assets/swords-black-mid.svg';
 import './header.scss';
 
 export interface HeaderProps {

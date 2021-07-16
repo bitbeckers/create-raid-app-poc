@@ -1,7 +1,7 @@
 @use "sass:map";
-@import '../../styles/variables.scss';
+@import '../../../styles/variables.scss';
 
-.storybook-button {
+.storybook-text {
   font-family: map-get($font-stack, 'body');
   font-weight: 700;
   border: 0;
@@ -9,17 +9,6 @@
   cursor: pointer;
   display: inline-block;
   line-height: 1;
-
-  &--primary {
-    color: white;
-    background-color: map-get($color-scheme-primary, '500') ;
-  }
-
-  &--secondary {
-    color: #333;
-    background-color: transparent;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px inset;
-  }
 
   &--small {
     font-size: 12px;

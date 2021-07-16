@@ -1,13 +1,13 @@
 @use "sass:map";
-@import '../../styles/variables.scss';
+@import '../../../styles/variables.scss';
 
 .wrapper {
-  font-family: map-get($font-stack, 'heading');
+  font-family: map-get($font-stack, 'footer');
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding: 15px 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 svg {
