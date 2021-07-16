@@ -10,7 +10,6 @@ import { Logo } from './components/atoms/Logo';
 import { CenteredRow } from './components/atoms/CenteredRow';
 import { SidePanel } from './components/atoms/SidePanel';
 
-
 const App = () => {
   return (
     <RaidContextProvider>

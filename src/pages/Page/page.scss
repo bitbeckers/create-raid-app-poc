@@ -2,7 +2,7 @@
 @import '../../styles/variables.scss';
 
 section {
-  font-family: map-get($font-stack, "body");
+  font-family: map-get($font-stack, 'body');
   font-size: 14px;
   line-height: 24px;
   padding: 48px 20px;
