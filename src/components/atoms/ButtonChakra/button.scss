@@ -1,0 +1,41 @@
+@use "sass:map";
+@import '../../../styles/variables.scss';
+
+.storybook-button {
+  font-family: map-get($font-stack, 'body');
+  font-weight: 700;
+  border: 1;
+  border-radius: 0.5em;
+  color: map-get($color-scheme-primary, '500');
+  border-color: map-get($color-scheme-primary, '500');
+  cursor: pointer;
+  display: inline-block;
+  line-height: 1;
+  justify-content: center;
+
+  &--primary {
+    color: white;
+    background-color: map-get($color-scheme-primary, '500');
+  }
+
+  &--secondary {
+    color: map-get($color-scheme-primary, '500');
+    background-color: transparent;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px inset;
+  }
+
+  &--small {
+    font-size: 12px;
+    padding: 10px 16px;
+  }
+
+  &--medium {
+    font-size: 14px;
+    padding: 11px 20px;
+  }
+
+  &--large {
+    font-size: 16px;
+    padding: 12px 24px;
+  }
+}
