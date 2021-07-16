@@ -7,7 +7,7 @@ export interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ children }) => (
-  <footer>
-    <div className='wrapper'>{children}</div>
+  <footer className='storybook-footer'>
+    <div>{children}</div>
   </footer>
 );

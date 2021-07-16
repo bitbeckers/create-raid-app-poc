@@ -1,6 +1,3 @@
-@use "sass:map";
-@import '../../../styles/variables.scss';
-
 .storybook-button-group {
   > button {
     margin: 0;
@@ -11,12 +8,12 @@
   }
 
   > button:first-child {
-    border-top-left-radius: 3em;
-    border-bottom-left-radius: 3em;
+    border-top-left-radius: 0.5em;
+    border-bottom-left-radius: 0.5em;
   }
 
   > button:last-child {
-    border-top-right-radius: 3em;
-    border-bottom-right-radius: 3em;
+    border-top-right-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
   }
 }

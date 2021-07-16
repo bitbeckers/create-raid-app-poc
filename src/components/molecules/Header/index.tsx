@@ -1,40 +1,29 @@
 import React from 'react';
 
 import { Button } from '../../atoms/Button';
-import logo from '../../../assets/swords-black-mid.svg';
 import './header.scss';
 
 export interface HeaderProps {
+  children?: any;
   user?: {};
-  onLogin: () => void;
-  onLogout: () => void;
-  onCreateAccount: () => void;
+  onLogin?: () => void;
+  onLogout?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
+  children,
   user,
   onLogin,
   onLogout,
-  onCreateAccount,
 }) => (
   <header>
     <div className='wrapper'>
-      <div className='logo'>
-        <img src={logo}></img>
-      </div>
+      {children}
       <div>
         {user ? (
-          <Button size='small' onClick={onLogout} label='Log out' />
+          <Button size='large' onClick={onLogout} label='Log out' primary />
         ) : (
-          <>
-            <Button size='small' onClick={onLogin} label='Log in' />
-            <Button
-              primary
-              size='small'
-              onClick={onCreateAccount}
-              label='Sign up'
-            />
-          </>
+          <Button size='large' onClick={onLogin} label='Log in' primary />
         )}
       </div>
     </div>

@@ -17,7 +17,7 @@ const Template: Story<ButtonGroupProps> = (args) => <ButtonGroup {...args} />;
 
 export const Two = Template.bind({});
 Two.args = {
-  buttons: ['Wrap', 'Unwrap'],
+  buttons: ['Pinapple', 'Pen'],
 };
 
 export const Three = Template.bind({});

@@ -3,22 +3,23 @@ import React from 'react';
 
 interface ContainerProps {
   children: any;
-  direction: any;
-  bg: string;
+  direction?: any;
+  bg?: string;
 }
 
 const Container: React.FC<ContainerProps> = ({
   children,
-  direction,
+  direction = 'column',
   bg,
 }: ContainerProps) => (
   <Flex
-    direction={direction ? direction : 'row'}
-    bg={bg ? bg : 'blackAlpha.800'}
-    minW='100%'
-    minH='100vh'
-    p='20px'
-    pl='240px'
+    direction={direction}
+    position='absolute'
+    bg={bg ? bg : 'black'}
+    minWidth='100vw'
+    minHeight='100vh'
+    padding='20px'
+    paddingLeft='240px'
     wrap='wrap'
     justify='flex-start'
   >

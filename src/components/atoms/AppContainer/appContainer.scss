@@ -1,0 +1,11 @@
+@use "sass:map";
+@import '../../../styles/variables.scss';
+
+.storybook-app-container {
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  min-height: 100vh;
+  min-width: 100vw;
+  position: relative;
+}

@@ -1,0 +1,27 @@
+@use "sass:map";
+@import '../../../styles/variables.scss';
+
+.storybook-side-panel {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 15%;
+  pointer-events: none;
+  z-index: 0;
+
+  img {
+    max-width: 100%;
+  }
+
+  @media (max-width: 600px) {
+    max-width: 15%;
+  }
+
+  &--left {
+    left: 0
+  }
+
+  &--right {
+    right: 0
+  }
+}

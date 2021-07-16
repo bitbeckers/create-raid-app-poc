@@ -18,14 +18,10 @@ export interface ButtonGroupProps {
    * How large should the buttons be?
    */
   size?: 'small' | 'medium' | 'large';
-  /**
-   * Optional click handler
-   */
-  onClick?: () => void;
 }
 
 /**
- * Primary UI component for user interaction
+ * Container for grouping and wrapping buttons - can be used for toggles
  */
 export const ButtonGroup: React.FC<ButtonGroupProps> = ({
   buttons,
@@ -36,7 +32,7 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
 }) => {
   const [selected, setSelected] = useState<number>(defaultSelected);
 
-  const handleSelection = (event, index: number) => {
+  const handleSelection = (index: number) => {
     setSelected(index);
   };
 
@@ -57,7 +53,7 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
               mode,
             ].join(' ')}
             style={{ backgroundColor }}
-            onClick={(event) => handleSelection(event, i)}
+            onClick={() => handleSelection(i)}
             {...props}
           >
             {label}
