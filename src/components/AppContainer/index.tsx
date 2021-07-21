@@ -22,10 +22,7 @@ export interface AppContainerProps {
 /**
  * Primary UI component for user interaction
  */
-export const AppContainer: React.FC<AppContainerProps> = ({
-  children,
-  ...props
-}) => {
+export const AppContainer: React.FC<AppContainerProps> = ({ children }) => {
   return (
     <Flex h='100vh' w='100vw'>
       <SidePanel>
@@ -45,6 +42,7 @@ export const AppContainer: React.FC<AppContainerProps> = ({
       <SidePanel>
         <Image src={raidGuildLogoRight} alt='Swords logo' maxH='75vh' />
       </SidePanel>
+      {children}
     </Flex>
   );
 };
