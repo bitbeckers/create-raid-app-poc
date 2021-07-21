@@ -8,7 +8,12 @@ export default {
   title: 'Components/Atoms/Text',
   component: Text,
   argTypes: {
+    size: {
+      options: ['sm', 'md', 'lg', '2xl', '4xl', '6xl'],
+      control: { type: 'radio' },
+    },
     color: { control: 'color' },
+    truncated: { control: 'boolean' },
   },
 } as Meta;
 
@@ -17,26 +22,15 @@ const content: string =
 
 const Template: Story<TextProps> = (args) => <Text {...args} />;
 
-export const Small = Template.bind({});
-Small.args = {
-  size: 'small',
+export const Paragraph = Template.bind({});
+Paragraph.args = {
+  size: 'md',
   content,
 };
 
-export const Medium = Template.bind({});
-Medium.args = {
-  size: 'medium',
-  content,
-};
-
-export const Large = Template.bind({});
-Large.args = {
-  size: 'large',
-  content,
-};
-
-export const MaxWords = Template.bind({});
-MaxWords.args = {
-  size: 'large',
+export const Truncated = Template.bind({});
+Truncated.args = {
+  size: 'md',
+  truncated: true,
   content,
 };

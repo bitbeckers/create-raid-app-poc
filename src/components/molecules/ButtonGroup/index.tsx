@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import './buttonGroup.scss';
+
+import { Button } from '../../atoms/Button';
+import { ButtonGroup as CButtonGroup } from '@chakra-ui/button';
 
 export interface ButtonGroupProps {
   /**
@@ -11,13 +13,13 @@ export interface ButtonGroupProps {
    */
   defaultSelected?: number;
   /**
-   * What background color to use
+   * Display the buttons as a single entity
    */
-  backgroundColor?: string;
+  isAttached?: boolean;
   /**
    * How large should the buttons be?
    */
-  size?: 'small' | 'medium' | 'large';
+  size?: 'xs' | 'sm' | 'md' | 'lg';
 }
 
 /**
@@ -26,8 +28,8 @@ export interface ButtonGroupProps {
 export const ButtonGroup: React.FC<ButtonGroupProps> = ({
   buttons,
   defaultSelected = 0,
-  size = 'medium',
-  backgroundColor,
+  size = 'md',
+  isAttached = true,
   ...props
 }) => {
   const [selected, setSelected] = useState<number>(defaultSelected);
@@ -36,30 +38,22 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
     setSelected(index);
   };
 
+  console.log('Buttons: ', buttons);
+
   return (
-    <div className='storybook-button-group'>
+    <CButtonGroup isAttached={isAttached}>
       {buttons.map((label: string, i: number) => {
-        const mode: string =
-          i === selected
-            ? 'storybook-button--primary'
-            : 'storybook-button--secondary';
         return (
-          <button
+          <Button
+            label={label}
             key={i}
-            type='button'
-            className={[
-              'storybook-button',
-              `storybook-button--${size}`,
-              mode,
-            ].join(' ')}
-            style={{ backgroundColor }}
+            variant={i === selected ? 'solid' : 'outline'}
+            size={size}
             onClick={() => handleSelection(i)}
             {...props}
-          >
-            {label}
-          </button>
+          />
         );
       })}
-    </div>
+    </CButtonGroup>
   );
 };

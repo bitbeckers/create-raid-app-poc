@@ -34,7 +34,8 @@ export const theme = extendTheme({
   components: {
     Button: {
       defaultProps: {
-        colorScheme: 'primaryAlpha.500',
+        colorScheme: 'primaryAlpha',
+        variant: 'solid',
       },
     },
 

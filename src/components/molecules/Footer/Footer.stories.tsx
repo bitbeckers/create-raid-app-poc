@@ -22,7 +22,7 @@ WithButtonAndText.args = {
   children: (
     <Fragment>
       <Button label='Button' />
-      <Text size='small' content='This is some text' />
+      <Text size='sm' content='This is some text' />
     </Fragment>
   ),
 };

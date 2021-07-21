@@ -8,19 +8,26 @@ export default {
   title: 'Components/Molecules/ButtonGroup',
   component: ButtonGroup,
   argTypes: {
-    defaultSelected: { control: 'number' },
-    backgroundColor: { control: 'color' },
+    isAttached: { control: 'boolean' },
+    // buttons: {
+    //   options: ['One', 'Two', 'Three', 'Four'],
+    //   control: { type: 'check' },
+    // },
+    spacing: { control: 'number' },
+    size: { options: ['xs', 'sm', 'md', 'lg'], control: { type: 'radio' } },
   },
 } as Meta;
 
 const Template: Story<ButtonGroupProps> = (args) => <ButtonGroup {...args} />;
 
-export const Two = Template.bind({});
-Two.args = {
-  buttons: ['Pinapple', 'Pen'],
+export const Attached = Template.bind({});
+Attached.args = {
+  buttons: ['Tic', 'Tac', 'Toe'],
+  isAttached: true,
 };
 
-export const Three = Template.bind({});
-Three.args = {
-  buttons: ['Tic', 'Tac', 'Toe'],
+export const Spaced = Template.bind({});
+Spaced.args = {
+  buttons: ['Pinapple', 'Pen'],
+  isAttached: false,
 };

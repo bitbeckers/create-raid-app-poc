@@ -2,12 +2,10 @@ import { addDecorator } from '@storybook/react';
 import { ChakraProvider, CSSReset } from '@chakra-ui/react';
 import React from 'react';
 
-// import {  } from '@chakra-ui/react';
+import { theme } from '../src/theme';
 
 export const Chakra = ({ children }) => (
-  <ChakraProvider>
-    <CSSReset />
-
+  <ChakraProvider theme={theme} resetCSS>
     {children}
   </ChakraProvider>
 );

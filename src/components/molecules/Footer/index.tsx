@@ -1,13 +1,12 @@
+import { Center } from '@chakra-ui/react';
 import React from 'react';
-
-import './footer.scss';
 
 export interface FooterProps {
   children?: {};
 }
 
 export const Footer: React.FC<FooterProps> = ({ children }) => (
-  <footer className='storybook-footer'>
-    <div>{children}</div>
-  </footer>
+  <Center bottom='15px' w='100%'>
+    {children}
+  </Center>
 );

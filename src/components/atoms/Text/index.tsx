@@ -1,5 +1,5 @@
 import React from 'react';
-import './text.scss';
+import { Text as CText } from '@chakra-ui/react';
 
 export interface TextProps {
   /**
@@ -7,31 +7,32 @@ export interface TextProps {
    */
   content: string;
   /**
-   * What background color to use
+   * What text color to use
    */
   color?: string;
   /**
+   * Truncate the text and end with elipsis on limit
+   */
+  truncated?: boolean;
+  /**
    * How large should the button be?
    */
-  size?: 'small' | 'medium' | 'large';
+  size?: 'sm' | 'md' | 'lg' | '2xl' | '4xl' | '6xl';
 }
 
 /**
  * Primary UI component for text
  */
 export const Text: React.FC<TextProps> = ({
-  size = 'medium',
+  size,
   color,
   content,
+  truncated,
   ...props
 }) => {
   return (
-    <p
-      className={['storybook-button', `storybook-button--${size}`].join(' ')}
-      style={{ color }}
-      {...props}
-    >
+    <CText fontSize={size} isTruncated={truncated} color={color} {...props}>
       {content}
-    </p>
+    </CText>
   );
 };

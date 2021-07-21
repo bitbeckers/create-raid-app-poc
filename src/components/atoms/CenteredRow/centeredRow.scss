@@ -1,9 +1,0 @@
-@use "sass:map";
-@import '../../../styles/variables.scss';
-
-.storybook-centered-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}

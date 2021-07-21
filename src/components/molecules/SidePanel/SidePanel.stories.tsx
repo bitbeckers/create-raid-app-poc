@@ -2,7 +2,6 @@ import React from 'react';
 import { Story, Meta } from '@storybook/react';
 import { ArgsTable } from '@storybook/addon-docs/blocks';
 
-import { Logo } from '../Logo';
 import { SidePanel, SidePanelProps } from '.';
 
 export default {
@@ -17,14 +16,12 @@ const Template: Story<SidePanelProps> = (args) => <SidePanel {...args} />;
 
 export const WithLogoLeft = Template.bind({});
 WithLogoLeft.args = {
-  position: 'left',
-  children: <Logo size='medium' />,
+  // position: 'left',
 };
 
 export const WithLogoRight = Template.bind({});
 WithLogoRight.args = {
-  position: 'right',
-  children: <Logo size='medium' />,
+  // position: 'right',
 };
 
 export const Empty = Template.bind({});
