@@ -34,18 +34,8 @@ export const theme = extendTheme({
   components: {
     Button: {
       defaultProps: {
-        colorScheme: 'primaryAlpha.500',
-      },
-    },
-
-    Drawer: {
-      parts: ['dialog'],
-      baseStyle: {
-        dialog: {
-          bg: 'primaryAlpha.500',
-          border: '1px solid',
-          borderColor: 'primaryAlpha.800',
-        },
+        colorScheme: 'primaryAlpha',
+        variant: 'solid',
       },
     },
 

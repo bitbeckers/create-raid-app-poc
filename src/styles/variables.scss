@@ -1,0 +1,19 @@
+@import '@fontsource/mirza';
+@import '@fontsource/uncial-antiqua';
+
+$font-stack: (
+  'heading': 'Uncial Antiqua',
+  'footer': 'Uncial Antiqua',
+  'body': 'Mirza',
+  'mono': 'Inconsolata',
+);
+
+$color-scheme-primary: (
+  '200': #ff95ad,
+  '300': #ff6788,
+  '400': #ff577c,
+  '500': #ff3864,
+  '600': #ff194c,
+  '700': #ff0940,
+  '800': #da0030,
+);

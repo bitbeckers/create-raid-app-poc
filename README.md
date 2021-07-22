@@ -1,6 +1,9 @@
 Live Demo on Netlify: https://infallible-wiles-fd5269.netlify.app
 
-# Getting Started with Create React App
+Storybook: `yarn storybook`
+App: `yarn start`
+
+# Getting Started with Create Raid App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
