@@ -16,6 +16,10 @@ export interface ButtonProps {
    */
   label: string;
   /**
+   * Optional icon to display in button
+   */
+  leftIcon?: any;
+  /**
    * Optional click handler
    */
   onClick?: () => void;
@@ -25,13 +29,19 @@ export interface ButtonProps {
  * Primary UI component for user interaction
  */
 export const Button: React.FC<ButtonProps> = ({
-  variant = 'solid',
+  variant,
   size,
   label = 'Button',
   ...props
 }) => {
   return (
-    <ChakraButton variant={variant} size={size} {...props}>
+    <ChakraButton
+      variant={variant}
+      size={size}
+      overflow='hidden'
+      text-overflow='ellipsis'
+      {...props}
+    >
       {label}
     </ChakraButton>
   );

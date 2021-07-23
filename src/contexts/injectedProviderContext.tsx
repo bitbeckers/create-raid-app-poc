@@ -7,7 +7,6 @@ import React, {
 } from 'react';
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
-// import { OverlayContext } from './OverlayContext';
 
 import { supportedChains } from '../utils/chain';
 import {
@@ -15,7 +14,6 @@ import {
   deriveSelectedAddress,
   getProviderOptions,
 } from '../utils/web3Modal';
-// import { setPageState } from '../stores/currentPageStateStore';
 
 const defaultModal = new Web3Modal({
   providerOptions: getProviderOptions(),
@@ -52,6 +50,7 @@ export const InjectedProvider: React.FC<InjectedProviderProps> = ({
   const connectProvider = async () => {
     const providerOptions = getProviderOptions();
 
+    console.log('providerOption: ', providerOptions);
     if (!providerOptions) {
       setInjectedProvider(null);
       setAddress(null);
@@ -83,6 +82,7 @@ export const InjectedProvider: React.FC<InjectedProviderProps> = ({
       setAddress(web3.currentProvider.selectedAddress);
       setInjectedChain(chain);
       setWeb3Modal(localWeb3Modal);
+      console.log('Injected provider: ', web3);
     }
   };
 

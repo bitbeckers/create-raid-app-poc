@@ -2,11 +2,11 @@ import React, { Fragment } from 'react';
 import { Story, Meta } from '@storybook/react';
 
 import { Footer, FooterProps } from '.';
-import { Button } from '../../atoms/Button';
-import { Text } from '../../atoms/Text';
+import { Button } from '../Button';
+import { Text } from '../Text';
 
 export default {
-  title: 'Components/Molecules/Footer',
+  title: 'Components/Atoms/Footer',
   component: Footer,
 } as Meta;
 

@@ -1,16 +1,18 @@
 import React from 'react';
 
-import { Footer } from '../molecules/Footer';
+import { Footer } from '../atoms/Footer';
 import { ButtonGroup } from '../molecules/ButtonGroup';
-import { Header } from '../molecules/Header';
+import { Header } from '../atoms/Header';
 import { Text } from '../atoms/Text';
-import { SidePanel } from '../molecules/SidePanel';
+import { SidePanel } from '../atoms/SidePanel';
 
 import { Container, Flex, Spacer, Image } from '@chakra-ui/react';
 
 import footerImage from '../../assets/raidguild_mark.png';
 import raidGuildLogoLeft from '../../assets/raid--left.png';
 import raidGuildLogoRight from '../../assets/raid--right.png';
+import { AccountButton } from '../molecules/AccountButton';
+import logo from '../../assets/wrapeth_logo.png';
 
 export interface AppContainerProps {
   /**
@@ -30,7 +32,16 @@ export const AppContainer: React.FC<AppContainerProps> = ({ children }) => {
       </SidePanel>
 
       <Container centerContent flexDirection='column'>
-        <Header />
+        <Header>
+          <Image
+            src={logo}
+            alt='wrapeth logo'
+            max-width='240px'
+            height='auto'
+          />
+          <Spacer />
+          <AccountButton />
+        </Header>
         <ButtonGroup buttons={['Wrap', 'Unwrap']} isAttached />
         <Text content='Set to wrap ETH to wETH or unwrap wETH to ETH' />
         <Spacer />
