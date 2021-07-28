@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Formik, Form, Field } from 'formik';
 import { useInjectedProvider } from '../../../contexts/injectedProviderContext';
@@ -38,12 +38,12 @@ interface Values {
  * Interface for depositing ETH and receiving wETH
  */
 export const DepositForm: React.FC<DepositFormProps> = () => {
-  const { web3Modal } = useInjectedProvider();
+  const { injectedProvider } = useInjectedProvider();
   const { currentUser, setCurrentUser } = useCurrentUser();
   const { contract } = useContract();
 
   const onFormSubmit = async (values: Values) => {
-    const weiValue = web3Modal.web3.utils.toWei('' + values.amount);
+    const weiValue = injectedProvider.utils.toWei('' + values.amount);
     if (currentUser && contract) {
       await contract.methods
         .deposit()
@@ -65,9 +65,8 @@ export const DepositForm: React.FC<DepositFormProps> = () => {
   return (
     <Container>
       <Formik
-        initialValues={{
-          amount: '',
-        }}
+        enableReinitialize
+        initialValues={{ amount: '' }}
         validationSchema={ValidAmount}
         onSubmit={async (values: Values, { setSubmitting, resetForm }) => {
           setSubmitting(true);
@@ -118,9 +117,14 @@ export const DepositForm: React.FC<DepositFormProps> = () => {
                     variant='solid'
                     onClick={() => {
                       if (currentUser?.ethBalance) {
+                        console.log(
+                          'Trying to update amountfield: ',
+                          currentUser.ethBalance,
+                        );
                         setFieldValue(
                           'amount',
-                          (+currentUser?.ethBalance).toPrecision(4),
+                          (+currentUser.ethBalance).toPrecision(4),
+                          true,
                         );
                       }
                     }}

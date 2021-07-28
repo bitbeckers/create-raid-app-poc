@@ -43,8 +43,6 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
     onSelect(index);
   };
 
-  console.log('Buttons: ', buttons);
-
   return (
     <CButtonGroup isAttached={isAttached}>
       {buttons.map((label: string, i: number) => {

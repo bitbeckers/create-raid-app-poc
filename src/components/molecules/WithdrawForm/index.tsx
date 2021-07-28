@@ -38,12 +38,12 @@ interface Values {
  * Interface for depositing ETH and receiving wETH
  */
 export const WithdrawForm: React.FC<WithdrawFormProps> = () => {
-  const { web3Modal } = useInjectedProvider();
+  const { injectedProvider } = useInjectedProvider();
   const { currentUser, setCurrentUser } = useCurrentUser();
   const { contract } = useContract();
 
   const onFormSubmit = async (values: Values) => {
-    const weiValue = web3Modal.web3.utils.toWei('' + values.amount);
+    const weiValue = injectedProvider.utils.toWei('' + values.amount);
     if (currentUser && contract) {
       await contract.methods
         .withdraw()
@@ -129,7 +129,6 @@ export const WithdrawForm: React.FC<WithdrawFormProps> = () => {
                   </Button>
                 </InputRightAddon>
               </InputGroup>
-
               {touched.amount && errors.amount ? (
                 <div className='error-message'>{errors.amount}</div>
               ) : null}

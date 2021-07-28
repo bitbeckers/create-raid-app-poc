@@ -46,8 +46,6 @@ export const InjectedProvider: React.FC<InjectedProviderProps> = ({
   const [injectedChain, setInjectedChain] = useState<Network>();
   const [web3Modal, setWeb3Modal] = useState(defaultModal);
   // const { errorToast } = useContext(OverlayContext);
-  console.log('injectedChain in injectedProviderContext: ', injectedChain);
-  console.log('web3Modal in injectedProviderContext: ', web3Modal);
 
   const hasListeners: any = useRef(null);
 
@@ -79,7 +77,6 @@ export const InjectedProvider: React.FC<InjectedProviderProps> = ({
       chainId,
     };
     console.log('connecting provider');
-    console.log('Chain in injectedProviderContext: ', chain);
     const web3: any = new Web3(provider);
     if (web3?.currentProvider?.selectedAddress) {
       setInjectedProvider(web3);
@@ -87,7 +84,6 @@ export const InjectedProvider: React.FC<InjectedProviderProps> = ({
       setAddress(web3.currentProvider.selectedAddress);
       setInjectedChain(chain);
       setWeb3Modal(localWeb3Modal);
-      console.log('Injected provider: ', web3);
     }
   };
 

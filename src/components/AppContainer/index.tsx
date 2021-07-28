@@ -67,7 +67,7 @@ export const AppContainer: React.FC<AppContainerProps> = ({ children }) => {
           <AccountButton />
         </Header>
         <ButtonGroup
-          buttons={[`Wrap ${networkName}`, `Unwrap ${networkName}`]}
+          buttons={[`Wrap ${networkName}`, `Unwrap w${networkName}`]}
           isAttached
           onSelect={onButtonSelection}
         />
@@ -85,7 +85,7 @@ export const AppContainer: React.FC<AppContainerProps> = ({ children }) => {
             {currentUser?.username ? (
               <WithdrawForm />
             ) : (
-              <Text>Connect to Unwrap {networkName}</Text>
+              <Text>Connect to Unwrap w{networkName}</Text>
             )}
           </Center>
         )}
