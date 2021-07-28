@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form } from 'formik';
 import { useInjectedProvider } from '../../../contexts/injectedProviderContext';
 import { useCurrentUser } from '../../../contexts/currentUserContext';
 import { useContract } from '../../../contexts/contractContext';
-import { DepositSchema } from '../../../utils/validation';
+import { ValidAmount } from '../../../utils/validation';
 import { Button } from '@chakra-ui/button';
 import {
   FormControl,
@@ -14,7 +14,6 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   HStack,
-  Text,
   Spacer,
   FormLabel,
   Container,
@@ -22,6 +21,7 @@ import {
   InputRightAddon,
 } from '@chakra-ui/react';
 import { User } from '../../../types';
+import { TokenInfo } from '../TokenInfo';
 
 export interface WithdrawFormProps {
   /**
@@ -54,7 +54,7 @@ export const WithdrawForm: React.FC<WithdrawFormProps> = () => {
         ...currentUser,
         ...{
           wethBalance: (+currentUser.wethBalance - +values.amount).toString(),
-          ethBalance: (+currentUser?.ethBalance + +values.amount).toString(),
+          ethBalance: (+currentUser.ethBalance + +values.amount).toString(),
         },
       };
 
@@ -68,7 +68,7 @@ export const WithdrawForm: React.FC<WithdrawFormProps> = () => {
         initialValues={{
           amount: '',
         }}
-        validationSchema={DepositSchema}
+        validationSchema={ValidAmount}
         onSubmit={async (values: Values, { setSubmitting, resetForm }) => {
           setSubmitting(true);
           try {
@@ -94,10 +94,9 @@ export const WithdrawForm: React.FC<WithdrawFormProps> = () => {
           <Form onSubmit={handleSubmit}>
             <FormControl id='withdrawForm' isRequired>
               <HStack>
-                <FormLabel>{currentUser?.network?.chain || 'XDAI'}</FormLabel>
-                {/* <TokenInfo Eth /> */}
+                <FormLabel>{currentUser?.network?.chain}</FormLabel>
                 <Spacer />
-                <Text>XDAI Balance 0.0000</Text>
+                <TokenInfo deposit={false} />
               </HStack>
               <InputGroup marginBottom='5px'>
                 <NumberInput variant='filled' width='80%'>

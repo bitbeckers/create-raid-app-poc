@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
-import { Button } from '../../atoms/Button';
-import { ButtonGroup as CButtonGroup } from '@chakra-ui/button';
+import { Button, ButtonGroup as CButtonGroup } from '@chakra-ui/button';
 
 export interface ButtonGroupProps {
   /**
@@ -51,13 +50,14 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
       {buttons.map((label: string, i: number) => {
         return (
           <Button
-            label={label}
             key={i}
             variant={i === selected ? 'solid' : 'outline'}
             size={size}
             onClick={() => handleSelection(i)}
             {...props}
-          />
+          >
+            {label}
+          </Button>
         );
       })}
     </CButtonGroup>

@@ -4,7 +4,7 @@ import { Formik, Form, Field } from 'formik';
 import { useInjectedProvider } from '../../../contexts/injectedProviderContext';
 import { useCurrentUser } from '../../../contexts/currentUserContext';
 import { useContract } from '../../../contexts/contractContext';
-import { DepositSchema } from '../../../utils/validation';
+import { ValidAmount } from '../../../utils/validation';
 import { Button } from '@chakra-ui/button';
 import {
   FormControl,
@@ -14,7 +14,6 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   HStack,
-  Text,
   Spacer,
   FormLabel,
   Container,
@@ -22,6 +21,7 @@ import {
   InputRightAddon,
 } from '@chakra-ui/react';
 import { User } from '../../../types';
+import { TokenInfo } from '../TokenInfo';
 
 export interface DepositFormProps {
   /**
@@ -54,7 +54,7 @@ export const DepositForm: React.FC<DepositFormProps> = () => {
         ...currentUser,
         ...{
           wethBalance: (+currentUser.wethBalance + +values.amount).toString(),
-          ethBalance: (+currentUser?.ethBalance - +values.amount).toString(),
+          ethBalance: (+currentUser.ethBalance - +values.amount).toString(),
         },
       };
 
@@ -68,7 +68,7 @@ export const DepositForm: React.FC<DepositFormProps> = () => {
         initialValues={{
           amount: '',
         }}
-        validationSchema={DepositSchema}
+        validationSchema={ValidAmount}
         onSubmit={async (values: Values, { setSubmitting, resetForm }) => {
           setSubmitting(true);
           try {
@@ -95,11 +95,8 @@ export const DepositForm: React.FC<DepositFormProps> = () => {
             <FormControl id='depositForm' isRequired>
               <HStack>
                 <FormLabel>{currentUser?.network?.chain}</FormLabel>
-                {/* <TokenInfo Eth /> */}
                 <Spacer />
-                <Text>{`${currentUser?.network?.chain} balance ${
-                  currentUser?.ethBalance || 'unknown'
-                }`}</Text>
+                <TokenInfo deposit />
               </HStack>
               <InputGroup marginBottom='5px'>
                 <NumberInput variant='filled' width='80%'>

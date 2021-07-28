@@ -44,6 +44,11 @@ export const AppContainer: React.FC<AppContainerProps> = ({ children }) => {
     }
   };
 
+  const networkName: string =
+    currentUser?.network?.chain !== undefined
+      ? currentUser?.network?.chain
+      : '';
+
   return (
     <Flex h='100vh' w='100vw'>
       <SidePanel>
@@ -62,7 +67,7 @@ export const AppContainer: React.FC<AppContainerProps> = ({ children }) => {
           <AccountButton />
         </Header>
         <ButtonGroup
-          buttons={['Wrap', 'Unwrap']}
+          buttons={[`Wrap ${networkName}`, `Unwrap ${networkName}`]}
           isAttached
           onSelect={onButtonSelection}
         />
@@ -71,9 +76,7 @@ export const AppContainer: React.FC<AppContainerProps> = ({ children }) => {
             {currentUser?.username ? (
               <DepositForm />
             ) : (
-              <Text>
-                Connect to Wrap <span>{currentUser?.network?.chain}</span>
-              </Text>
+              <Text>Connect to Wrap {networkName}</Text>
             )}
           </Center>
         )}
@@ -82,9 +85,7 @@ export const AppContainer: React.FC<AppContainerProps> = ({ children }) => {
             {currentUser?.username ? (
               <WithdrawForm />
             ) : (
-              <Text>
-                Connect to Unwrap <span>{currentUser?.network?.chain}</span>
-              </Text>
+              <Text>Connect to Unwrap {networkName}</Text>
             )}
           </Center>
         )}

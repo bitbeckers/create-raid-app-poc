@@ -25,7 +25,12 @@ export const AccountButton: React.FC<AccountButtonProps> = ({ children }) => {
   };
 
   return currentUser?.username ? (
-    <Button maxW='120px' variant={'outline'} onClick={() => disconnectDapp()}>
+    <Button
+      textStyle='buttonLabel'
+      maxW='120px'
+      variant={'outline'}
+      onClick={() => disconnectDapp()}
+    >
       <LinkIcon
         color='primaryAlpha.500'
         onClick={() => disconnectDapp()}
@@ -36,7 +41,12 @@ export const AccountButton: React.FC<AccountButtonProps> = ({ children }) => {
       </Text>
     </Button>
   ) : (
-    <Button maxW='120px' variant={'solid'} onClick={() => connectWallet()}>
+    <Button
+      textStyle='buttonLabel'
+      maxW='120px'
+      variant={'solid'}
+      onClick={() => connectWallet()}
+    >
       Connect
       {children}
     </Button>

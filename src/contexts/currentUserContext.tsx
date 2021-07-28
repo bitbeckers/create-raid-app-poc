@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { User } from '../types';
+import { Network, User } from '../types';
 import { useInjectedProvider } from './injectedProviderContext';
 
 type CurrentUserContextType = {
@@ -8,7 +8,6 @@ type CurrentUserContextType = {
 };
 
 export const CurrentUserContext = createContext<CurrentUserContextType>({
-  currentUser: undefined,
   setCurrentUser: (user: User) => {},
 });
 
@@ -29,7 +28,7 @@ export const CurrentUserContextProvider: React.FC<CurrentUserProps> = ({
     setCurrentUser(user);
   }, [injectedChain, address]);
 
-  const createWeb3User = (accountAddress: string, network: any): User => {
+  const createWeb3User = (accountAddress: string, network: Network): User => {
     return {
       type: 'web3',
       attributes: { 'custom:account_address': accountAddress },
