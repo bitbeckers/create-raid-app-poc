@@ -6,6 +6,8 @@ import { InjectedProvider } from './contexts/injectedProviderContext';
 import { AppContainer } from './components/AppContainer';
 import { ChakraProvider } from '@chakra-ui/react';
 import { theme } from './theme';
+import { CurrentUserContextProvider } from './contexts/currentUserContext';
+import { ContractContextProvider } from './contexts/contractContext';
 
 const App = () => {
   return (
@@ -13,7 +15,11 @@ const App = () => {
       <ChakraProvider theme={theme} resetCSS>
         <LoaderContextProvider>
           <InjectedProvider>
-            <AppContainer />
+            <CurrentUserContextProvider>
+              <ContractContextProvider>
+                <AppContainer />
+              </ContractContextProvider>
+            </CurrentUserContextProvider>
           </InjectedProvider>
         </LoaderContextProvider>
       </ChakraProvider>

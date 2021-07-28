@@ -2,16 +2,14 @@ import React from 'react';
 import { Story, Meta } from '@storybook/react';
 import { ArgsTable } from '@storybook/addon-docs/blocks';
 
-import { AccountButton, AccountButtonProps } from '.';
+import { DepositForm, DepositFormProps } from '.';
 
 export default {
-  title: 'Components/Molecules/AccountButton',
-  component: AccountButton,
+  title: 'Components/Molecules/DepositForm',
+  component: DepositForm,
 } as Meta;
 
-const Template: Story<AccountButtonProps> = (args) => (
-  <AccountButton {...args} />
-);
+const Template: Story<DepositFormProps> = (args) => <DepositForm {...args} />;
 
 // const mockUser: User = {
 //   type: 'web3',

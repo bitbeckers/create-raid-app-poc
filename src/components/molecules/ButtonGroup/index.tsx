@@ -20,6 +20,10 @@ export interface ButtonGroupProps {
    * How large should the buttons be?
    */
   size?: 'xs' | 'sm' | 'md' | 'lg';
+  /**
+   * Function to call when button is selected
+   */
+  onSelect: (index: number) => void;
 }
 
 /**
@@ -30,12 +34,14 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
   defaultSelected = 0,
   size = 'md',
   isAttached = true,
+  onSelect,
   ...props
 }) => {
   const [selected, setSelected] = useState<number>(defaultSelected);
 
   const handleSelection = (index: number) => {
     setSelected(index);
+    onSelect(index);
   };
 
   console.log('Buttons: ', buttons);

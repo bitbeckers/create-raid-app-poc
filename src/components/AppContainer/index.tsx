@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Footer } from '../atoms/Footer';
 import { ButtonGroup } from '../molecules/ButtonGroup';
 import { Header } from '../atoms/Header';
-import { Text } from '../atoms/Text';
 import { SidePanel } from '../atoms/SidePanel';
 
-import { Container, Flex, Spacer, Image } from '@chakra-ui/react';
+import { Container, Flex, Spacer, Image, Text, Center } from '@chakra-ui/react';
 
 import footerImage from '../../assets/raidguild_mark.png';
 import raidGuildLogoLeft from '../../assets/raid--left.png';
 import raidGuildLogoRight from '../../assets/raid--right.png';
 import { AccountButton } from '../molecules/AccountButton';
 import logo from '../../assets/wrapeth_logo.png';
+import { useCurrentUser } from '../../contexts/currentUserContext';
+import { DepositForm } from '../molecules/DepositForm';
+import { WithdrawForm } from '../molecules/WithdrawForm';
 
 export interface AppContainerProps {
   /**
@@ -25,6 +27,23 @@ export interface AppContainerProps {
  * Primary UI component for user interaction
  */
 export const AppContainer: React.FC<AppContainerProps> = ({ children }) => {
+  const { currentUser } = useCurrentUser();
+
+  const [deposit, setDeposit] = useState<boolean>(false);
+
+  const onButtonSelection = (index: number) => {
+    switch (index) {
+      case 0:
+        setDeposit(true);
+        break;
+      case 1:
+        setDeposit(false);
+        break;
+      default:
+        console.log(`Invalid input: ${index}`);
+    }
+  };
+
   return (
     <Flex h='100vh' w='100vw'>
       <SidePanel>
@@ -42,9 +61,35 @@ export const AppContainer: React.FC<AppContainerProps> = ({ children }) => {
           <Spacer />
           <AccountButton />
         </Header>
-        <ButtonGroup buttons={['Wrap', 'Unwrap']} isAttached />
-        <Text content='Set to wrap ETH to wETH or unwrap wETH to ETH' />
+        <ButtonGroup
+          buttons={['Wrap', 'Unwrap']}
+          isAttached
+          onSelect={onButtonSelection}
+        />
+        {deposit && (
+          <Center marginTop='10px'>
+            {currentUser?.username ? (
+              <DepositForm />
+            ) : (
+              <Text>
+                Connect to Wrap <span>{currentUser?.network?.chain}</span>
+              </Text>
+            )}
+          </Center>
+        )}
+        {!deposit && (
+          <Center marginTop='10px'>
+            {currentUser?.username ? (
+              <WithdrawForm />
+            ) : (
+              <Text>
+                Connect to Unwrap <span>{currentUser?.network?.chain}</span>
+              </Text>
+            )}
+          </Center>
+        )}
         <Spacer />
+
         <Footer>
           <Image src={footerImage} alt='Created by Raid Guild' />
         </Footer>

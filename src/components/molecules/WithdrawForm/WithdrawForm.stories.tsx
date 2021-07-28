@@ -2,16 +2,14 @@ import React from 'react';
 import { Story, Meta } from '@storybook/react';
 import { ArgsTable } from '@storybook/addon-docs/blocks';
 
-import { AccountButton, AccountButtonProps } from '.';
+import { WithdrawForm, WithdrawFormProps } from '.';
 
 export default {
-  title: 'Components/Molecules/AccountButton',
-  component: AccountButton,
+  title: 'Components/Molecules/WithdrawForm',
+  component: WithdrawForm,
 } as Meta;
 
-const Template: Story<AccountButtonProps> = (args) => (
-  <AccountButton {...args} />
-);
+const Template: Story<WithdrawFormProps> = (args) => <WithdrawForm {...args} />;
 
 // const mockUser: User = {
 //   type: 'web3',

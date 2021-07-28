@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
+import { Network } from '../types';
 
 import { supportedChains } from '../utils/chain';
 import {
@@ -15,6 +16,7 @@ import {
   getProviderOptions,
 } from '../utils/web3Modal';
 
+//TODO refactor to Ethers
 const defaultModal = new Web3Modal({
   providerOptions: getProviderOptions(),
   cacheProvider: true,
@@ -41,9 +43,11 @@ export const InjectedProvider: React.FC<InjectedProviderProps> = ({
 }: InjectedProviderProps) => {
   const [injectedProvider, setInjectedProvider]: any = useState(null);
   const [address, setAddress] = useState(null);
-  const [injectedChain, setInjectedChain] = useState(null);
+  const [injectedChain, setInjectedChain] = useState<Network>();
   const [web3Modal, setWeb3Modal] = useState(defaultModal);
   // const { errorToast } = useContext(OverlayContext);
+  console.log('injectedChain in injectedProviderContext: ', injectedChain);
+  console.log('web3Modal in injectedProviderContext: ', web3Modal);
 
   const hasListeners: any = useRef(null);
 
@@ -75,6 +79,7 @@ export const InjectedProvider: React.FC<InjectedProviderProps> = ({
       chainId,
     };
     console.log('connecting provider');
+    console.log('Chain in injectedProviderContext: ', chain);
     const web3: any = new Web3(provider);
     if (web3?.currentProvider?.selectedAddress) {
       setInjectedProvider(web3);

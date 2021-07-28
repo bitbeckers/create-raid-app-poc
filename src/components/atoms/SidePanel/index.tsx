@@ -13,7 +13,7 @@ export interface SidePanelProps {
  */
 export const SidePanel: React.FC<SidePanelProps> = ({ children }) => {
   return (
-    <Center top='50%' pointer-events='none' z-index='0'>
+    <Center top='50%' pointerEvents='none' z-index='0'>
       {children}
     </Center>
   );

@@ -6,7 +6,7 @@ const isInjected = () => window.ethereum?.chainId;
 export const attemptInjectedChainData = () =>
   isInjected() ? chainByID(window.ethereum.chainId) : chainByID('0x1');
 
-//TODO Set t connect to xDAI
+//TODO Set to connect to xDAI
 const addNetworkProviders = (chainData: any) => {
   const allProviders: any = {};
   if (!chainData) {
