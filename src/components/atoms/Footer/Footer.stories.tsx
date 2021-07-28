@@ -2,11 +2,10 @@ import React, { Fragment } from 'react';
 import { Story, Meta } from '@storybook/react';
 
 import { Footer, FooterProps } from '.';
-import { Button } from '../../atoms/Button';
-import { Text } from '../../atoms/Text';
+import { Button, Text } from '@chakra-ui/react';
 
 export default {
-  title: 'Components/Molecules/Footer',
+  title: 'Components/Atoms/Footer',
   component: Footer,
 } as Meta;
 
@@ -21,8 +20,8 @@ export const WithButtonAndText = Template.bind({});
 WithButtonAndText.args = {
   children: (
     <Fragment>
-      <Button label='Button' />
-      <Text size='sm' content='This is some text' />
+      <Button>Button</Button>
+      <Text>This is some text</Text>
     </Fragment>
   ),
 };

@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Footer } from '../molecules/Footer';
+import { Footer } from '../atoms/Footer';
 import { ButtonGroup } from '../molecules/ButtonGroup';
-import { Header } from '../molecules/Header';
-import { Text } from '../atoms/Text';
-import { SidePanel } from '../molecules/SidePanel';
+import { Header } from '../atoms/Header';
+import { SidePanel } from '../atoms/SidePanel';
 
-import { Container, Flex, Spacer, Image } from '@chakra-ui/react';
+import { Container, Flex, Spacer, Image, Text, Center } from '@chakra-ui/react';
 
 import footerImage from '../../assets/raidguild_mark.png';
 import raidGuildLogoLeft from '../../assets/raid--left.png';
 import raidGuildLogoRight from '../../assets/raid--right.png';
+import { AccountButton } from '../molecules/AccountButton';
+import logo from '../../assets/wrapeth_logo.png';
+import { useCurrentUser } from '../../contexts/currentUserContext';
+import { DepositForm } from '../molecules/DepositForm';
+import { WithdrawForm } from '../molecules/WithdrawForm';
 
 export interface AppContainerProps {
   /**
@@ -22,7 +26,32 @@ export interface AppContainerProps {
 /**
  * Primary UI component for user interaction
  */
+//TODO Set max button not updating form
+//TODO When 'Wrap' selected, set TokenInfo to Wrap
+//TODO invalid value returning unhandled error
 export const AppContainer: React.FC<AppContainerProps> = ({ children }) => {
+  const { currentUser } = useCurrentUser();
+
+  const [deposit, setDeposit] = useState<boolean>(false);
+
+  const onButtonSelection = (index: number) => {
+    switch (index) {
+      case 0:
+        setDeposit(true);
+        break;
+      case 1:
+        setDeposit(false);
+        break;
+      default:
+        console.log(`Invalid input: ${index}`);
+    }
+  };
+
+  const networkName: string =
+    currentUser?.network?.chain !== undefined
+      ? currentUser?.network?.chain
+      : '';
+
   return (
     <Flex h='100vh' w='100vw'>
       <SidePanel>
@@ -30,10 +59,41 @@ export const AppContainer: React.FC<AppContainerProps> = ({ children }) => {
       </SidePanel>
 
       <Container centerContent flexDirection='column'>
-        <Header />
-        <ButtonGroup buttons={['Wrap', 'Unwrap']} isAttached />
-        <Text content='Set to wrap ETH to wETH or unwrap wETH to ETH' />
+        <Header>
+          <Image
+            src={logo}
+            alt='wrapeth logo'
+            max-width='240px'
+            height='auto'
+          />
+          <Spacer />
+          <AccountButton />
+        </Header>
+        <ButtonGroup
+          buttons={[`Wrap ${networkName}`, `Unwrap w${networkName}`]}
+          isAttached
+          onSelect={onButtonSelection}
+        />
+        {deposit && (
+          <Center marginTop='10px'>
+            {currentUser?.username ? (
+              <DepositForm />
+            ) : (
+              <Text>Connect to Wrap {networkName}</Text>
+            )}
+          </Center>
+        )}
+        {!deposit && (
+          <Center marginTop='10px'>
+            {currentUser?.username ? (
+              <WithdrawForm />
+            ) : (
+              <Text>Connect to Unwrap w{networkName}</Text>
+            )}
+          </Center>
+        )}
         <Spacer />
+
         <Footer>
           <Image src={footerImage} alt='Created by Raid Guild' />
         </Footer>

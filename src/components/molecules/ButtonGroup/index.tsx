@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
-import { Button } from '../../atoms/Button';
-import { ButtonGroup as CButtonGroup } from '@chakra-ui/button';
+import { Button, ButtonGroup as CButtonGroup } from '@chakra-ui/button';
 
 export interface ButtonGroupProps {
   /**
@@ -20,6 +19,10 @@ export interface ButtonGroupProps {
    * How large should the buttons be?
    */
   size?: 'xs' | 'sm' | 'md' | 'lg';
+  /**
+   * Function to call when button is selected
+   */
+  onSelect: (index: number) => void;
 }
 
 /**
@@ -30,28 +33,29 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
   defaultSelected = 0,
   size = 'md',
   isAttached = true,
+  onSelect,
   ...props
 }) => {
   const [selected, setSelected] = useState<number>(defaultSelected);
 
   const handleSelection = (index: number) => {
     setSelected(index);
+    onSelect(index);
   };
-
-  console.log('Buttons: ', buttons);
 
   return (
     <CButtonGroup isAttached={isAttached}>
       {buttons.map((label: string, i: number) => {
         return (
           <Button
-            label={label}
             key={i}
             variant={i === selected ? 'solid' : 'outline'}
             size={size}
             onClick={() => handleSelection(i)}
             {...props}
-          />
+          >
+            {label}
+          </Button>
         );
       })}
     </CButtonGroup>

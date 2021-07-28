@@ -1,4 +1,10 @@
-export const supportedChains: any = {
+import { Network } from '../types';
+
+interface SupportedChains {
+  [chainId: string]: Network;
+}
+
+export const supportedChains: SupportedChains = {
   '0x1': {
     name: 'Ethereum Mainnet',
     short_name: 'eth',
@@ -61,8 +67,8 @@ export const supportedChains: any = {
   },
 };
 
-export const chainByID = (chainID: string) => supportedChains[chainID];
-export const chainByNetworkId = (networkId: string) => {
+export const chainByID = (chainId: string): Network => supportedChains[chainId];
+export const chainByNetworkId = (networkId: string): Network => {
   const idMapping: any = {
     1: supportedChains['0x1'],
     4: supportedChains['0x4'],

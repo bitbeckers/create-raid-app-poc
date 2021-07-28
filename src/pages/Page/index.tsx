@@ -1,17 +1,14 @@
 import React from 'react';
 
-import { Header } from '../../components/molecules/Header';
-import './page.scss';
+import { Header } from '../../components/atoms/Header';
 
 export interface PageProps {
-  user?: {};
-  onLogin: () => void;
-  onLogout: () => void;
+  children?: any;
 }
 
-export const Page: React.FC<PageProps> = ({ user, onLogin, onLogout }) => (
+export const Page: React.FC<PageProps> = ({ children }) => (
   <article>
-    <Header user={user} onLogin={onLogin} onLogout={onLogout} />
+    <Header />
 
     <section>
       <h2>Pages in Storybook</h2>
@@ -78,6 +75,7 @@ export const Page: React.FC<PageProps> = ({ user, onLogin, onLogout }) => (
         </svg>
         Viewports addon in the toolbar
       </div>
+      {children}
     </section>
   </article>
 );

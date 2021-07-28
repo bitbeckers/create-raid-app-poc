@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
-// import { OverlayContext } from './OverlayContext';
+import { Network } from '../types';
 
 import { supportedChains } from '../utils/chain';
 import {
@@ -15,8 +15,9 @@ import {
   deriveSelectedAddress,
   getProviderOptions,
 } from '../utils/web3Modal';
-// import { setPageState } from '../stores/currentPageStateStore';
+import { useCurrentUser } from './currentUserContext';
 
+//TODO refactor to Ethers
 const defaultModal = new Web3Modal({
   providerOptions: getProviderOptions(),
   cacheProvider: true,
@@ -43,7 +44,7 @@ export const InjectedProvider: React.FC<InjectedProviderProps> = ({
 }: InjectedProviderProps) => {
   const [injectedProvider, setInjectedProvider]: any = useState(null);
   const [address, setAddress] = useState(null);
-  const [injectedChain, setInjectedChain] = useState(null);
+  const [injectedChain, setInjectedChain] = useState<Network>();
   const [web3Modal, setWeb3Modal] = useState(defaultModal);
   // const { errorToast } = useContext(OverlayContext);
 
@@ -52,6 +53,7 @@ export const InjectedProvider: React.FC<InjectedProviderProps> = ({
   const connectProvider = async () => {
     const providerOptions = getProviderOptions();
 
+    console.log('providerOption: ', providerOptions);
     if (!providerOptions) {
       setInjectedProvider(null);
       setAddress(null);

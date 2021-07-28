@@ -31,11 +31,35 @@ export const theme = extendTheme({
     },
   },
 
+  textStyles: {
+    p: {
+      textTransform: 'uppercase',
+    },
+  },
+
   components: {
     Button: {
       defaultProps: {
         colorScheme: 'primaryAlpha',
         variant: 'solid',
+        fontWeight: '400',
+      },
+      variants: {
+        solid: () => ({
+          textTransform: 'uppercase',
+        }),
+        outline: () => ({
+          textTransform: 'uppercase',
+        }),
+      },
+    },
+
+    Form: {
+      defaultProps: {
+        width: '90%',
+        textAlign: 'left',
+        paddingTop: '2em',
+        paddingBottom: '2em',
       },
     },
 
@@ -57,7 +81,7 @@ export const theme = extendTheme({
       },
     },
 
-    Textarea: {
+    Text: {
       defaultProps: {
         variant: 'rg',
       },
@@ -65,9 +89,8 @@ export const theme = extendTheme({
         rg: {
           color: 'white',
           bg: 'black',
-          border: '1px solid',
-          borderColor: 'primaryAlpha.500',
           margin: '5px',
+          textTransform: 'uppercase',
         },
       },
     },
