@@ -22,6 +22,7 @@ export interface ButtonGroupProps {
   /**
    * Function to call when button is selected
    */
+  // eslint-disable-next-line no-unused-vars
   onSelect: (index: number) => void;
 }
 

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form } from 'formik';
 import { useInjectedProvider } from '../../../contexts/injectedProviderContext';
 import { useCurrentUser } from '../../../contexts/currentUserContext';
 import { useContract } from '../../../contexts/contractContext';

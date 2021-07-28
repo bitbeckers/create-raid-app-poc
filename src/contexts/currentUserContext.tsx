@@ -4,11 +4,13 @@ import { useInjectedProvider } from './injectedProviderContext';
 
 type CurrentUserContextType = {
   currentUser?: User;
+  // eslint-disable-next-line no-unused-vars
   setCurrentUser: (user: User) => void;
 };
 
 export const CurrentUserContext = createContext<CurrentUserContextType>({
   currentUser: undefined,
+  // eslint-disable-next-line no-unused-vars
   setCurrentUser: (user: User) => {},
 });
 

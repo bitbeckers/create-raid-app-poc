@@ -5,11 +5,13 @@ import WethAbi from '../contracts/wethAbi.json';
 
 type ContractContextType = {
   contract?: Contract;
+  // eslint-disable-next-line no-unused-vars
   setContract: (contract: Contract) => void;
 };
 
 export const ContractContext = createContext<ContractContextType>({
   contract: undefined,
+  // eslint-disable-next-line no-unused-vars
   setContract: (contract: Contract) => {},
 });
 
