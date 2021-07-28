@@ -8,6 +8,7 @@ type CurrentUserContextType = {
 };
 
 export const CurrentUserContext = createContext<CurrentUserContextType>({
+  currentUser: undefined,
   setCurrentUser: (user: User) => {},
 });
 
@@ -28,7 +29,10 @@ export const CurrentUserContextProvider: React.FC<CurrentUserProps> = ({
     setCurrentUser(user);
   }, [injectedProvider, injectedChain, address]);
 
-  const createWeb3User = (accountAddress: string, network: Network): User => {
+  const createWeb3User = (
+    accountAddress: string | '',
+    network: Network,
+  ): User => {
     return {
       type: 'web3',
       attributes: { 'custom:account_address': accountAddress },

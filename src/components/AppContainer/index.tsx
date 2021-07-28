@@ -26,6 +26,9 @@ export interface AppContainerProps {
 /**
  * Primary UI component for user interaction
  */
+//TODO Set max button not updating form
+//TODO When 'Wrap' selected, set TokenInfo to Wrap
+//TODO invalid value returning unhandled error
 export const AppContainer: React.FC<AppContainerProps> = ({ children }) => {
   const { currentUser } = useCurrentUser();
 

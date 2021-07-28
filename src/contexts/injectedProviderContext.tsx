@@ -15,6 +15,7 @@ import {
   deriveSelectedAddress,
   getProviderOptions,
 } from '../utils/web3Modal';
+import { useCurrentUser } from './currentUserContext';
 
 //TODO refactor to Ethers
 const defaultModal = new Web3Modal({
