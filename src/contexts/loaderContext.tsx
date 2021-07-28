@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState } from 'react';
 
 type LoaderContextType = {
   loading: boolean;
+  // eslint-disable-next-line no-unused-vars
   setLoading: (value: boolean) => void;
 };
 
