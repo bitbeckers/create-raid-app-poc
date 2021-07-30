@@ -58,7 +58,7 @@ export const AppContainer: React.FC<AppContainerProps> = ({ children }) => {
         <Image src={raidGuildLogoLeft} alt='Swords logo' maxH='75vh' />
       </SidePanel>
 
-      <Container centerContent flexDirection='column'>
+      <Container centerContent flexDirection='column' width='100%'>
         <Header>
           <Image
             src={logo}
@@ -69,13 +69,13 @@ export const AppContainer: React.FC<AppContainerProps> = ({ children }) => {
           <Spacer />
           <AccountButton />
         </Header>
-        <ButtonGroup
-          buttons={[`Wrap ${networkName}`, `Unwrap w${networkName}`]}
-          defaultSelected={deposit ? 0 : 1}
-          isAttached
-          onSelect={onButtonSelection}
-        />
         <Container centerContent marginTop='10px'>
+          <ButtonGroup
+            buttons={[`Wrap ${networkName}`, `Unwrap w${networkName}`]}
+            defaultSelected={deposit ? 0 : 1}
+            isAttached
+            onSelect={onButtonSelection}
+          />
           {deposit ? (
             currentUser?.username ? (
               <DepositForm />
