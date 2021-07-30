@@ -44,32 +44,37 @@ export const WithdrawForm: React.FC<WithdrawFormProps> = () => {
 
   const onFormSubmit = async (values: Values) => {
     const weiValue = injectedProvider.utils.toWei('' + values.amount);
+    console.log('weiValue: ', weiValue);
     if (currentUser && contract) {
-      await contract.methods
-        .withdraw()
-        .send({ value: weiValue, from: currentUser?.username });
+      try {
+        await contract.methods
+          .withdraw(weiValue)
+          .send({ from: currentUser?.username });
 
-      //TODO updating balances and typing
-      const updatedUser: User = {
-        ...currentUser,
-        ...{
-          wethBalance: (+currentUser.wethBalance - +values.amount).toString(),
-          ethBalance: (+currentUser.ethBalance + +values.amount).toString(),
-        },
-      };
+        //TODO updating balances and typing
+        const updatedUser: User = {
+          ...currentUser,
+          ...{
+            wethBalance: (+currentUser.wethBalance - +values.amount).toString(),
+            ethBalance: (+currentUser.ethBalance + +values.amount).toString(),
+          },
+        };
 
-      setCurrentUser(updatedUser);
+        setCurrentUser(updatedUser);
+      } catch (e) {
+        console.log('Error: ', e);
+      }
     }
   };
 
   return (
     <Container>
       <Formik
-        initialValues={{
-          amount: '',
-        }}
+        enableReinitialize
+        initialValues={{ amount: '' }}
         validationSchema={ValidAmount}
         onSubmit={async (values: Values, { setSubmitting, resetForm }) => {
+          console.log('values', values);
           setSubmitting(true);
           try {
             onFormSubmit(values);
@@ -85,13 +90,11 @@ export const WithdrawForm: React.FC<WithdrawFormProps> = () => {
           values,
           errors,
           touched,
-          handleChange,
           handleBlur,
-          handleSubmit,
           isSubmitting,
           setFieldValue,
         }) => (
-          <Form onSubmit={handleSubmit}>
+          <Form>
             <FormControl id='withdrawForm' isRequired>
               <HStack>
                 <FormLabel>{currentUser?.network?.chain}</FormLabel>
@@ -99,28 +102,35 @@ export const WithdrawForm: React.FC<WithdrawFormProps> = () => {
                 <TokenInfo deposit={false} />
               </HStack>
               <InputGroup marginBottom='5px'>
-                <NumberInput variant='filled' width='80%'>
-                  <NumberInputField
-                    precision={4}
-                    name='amount'
-                    placeholder='Amount to unwrap'
-                    value={values.amount}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
+                <NumberInput
+                  value={values.amount}
+                  placeholder='Amount to unwrap'
+                  precision={4}
+                  variant='outline'
+                  width='80%'
+                  onChange={(e) => setFieldValue('amount', e)}
+                  onBlur={handleBlur}
+                  min={0}
+                  max={currentUser?.wethBalance ? +currentUser.wethBalance : 0}
+                >
+                  <NumberInputField name='amount' borderRightRadius='none' />
                   <NumberInputStepper>
                     <NumberIncrementStepper />
                     <NumberDecrementStepper />
                   </NumberInputStepper>
                 </NumberInput>
-                <InputRightAddon width='20%'>
+                <InputRightAddon m={0} p={0}>
                   <Button
                     variant='solid'
+                    size='lg'
+                    h='100%'
+                    w='100%'
+                    borderLeftRadius='none'
                     onClick={() => {
-                      if (currentUser?.wethBalance) {
+                      if (currentUser?.ethBalance) {
                         setFieldValue(
                           'amount',
-                          (+currentUser?.wethBalance).toPrecision(4),
+                          (+currentUser.ethBalance).toPrecision(4),
                         );
                       }
                     }}
@@ -137,8 +147,8 @@ export const WithdrawForm: React.FC<WithdrawFormProps> = () => {
               variant='solid'
               type='submit'
               size='lg'
-              block
-              disabled={isSubmitting}
+              isLoading={isSubmitting}
+              loadingText='Submitting'
               width='100%'
             >
               {isSubmitting ? 'Loading…' : 'Submit'}

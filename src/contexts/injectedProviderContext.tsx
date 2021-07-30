@@ -129,7 +129,7 @@ export const InjectedProvider: React.FC<InjectedProviderProps> = ({
   }, [injectedProvider]);
 
   const requestWallet = async () => {
-    connectProvider();
+    await connectProvider();
   };
 
   const disconnectDapp = async () => {

@@ -45,20 +45,24 @@ export const DepositForm: React.FC<DepositFormProps> = () => {
   const onFormSubmit = async (values: Values) => {
     const weiValue = injectedProvider.utils.toWei('' + values.amount);
     if (currentUser && contract) {
-      await contract.methods
-        .deposit()
-        .send({ value: weiValue, from: currentUser?.username });
+      try {
+        await contract.methods
+          .deposit()
+          .send({ value: weiValue, from: currentUser?.username });
 
-      //TODO updating balances and typing
-      const updatedUser: User = {
-        ...currentUser,
-        ...{
-          wethBalance: (+currentUser.wethBalance + +values.amount).toString(),
-          ethBalance: (+currentUser.ethBalance - +values.amount).toString(),
-        },
-      };
+        //TODO updating balances and typing
+        const updatedUser: User = {
+          ...currentUser,
+          ...{
+            wethBalance: (+currentUser.wethBalance + +values.amount).toString(),
+            ethBalance: (+currentUser.ethBalance - +values.amount).toString(),
+          },
+        };
 
-      setCurrentUser(updatedUser);
+        setCurrentUser(updatedUser);
+      } catch (e) {
+        console.log('Error: ', e);
+      }
     }
   };
 
@@ -84,13 +88,11 @@ export const DepositForm: React.FC<DepositFormProps> = () => {
           values,
           errors,
           touched,
-          handleChange,
           handleBlur,
-          handleSubmit,
           isSubmitting,
           setFieldValue,
         }) => (
-          <Form onSubmit={handleSubmit}>
+          <Form>
             <FormControl id='depositForm' isRequired>
               <HStack>
                 <FormLabel>{currentUser?.network?.chain}</FormLabel>
@@ -98,33 +100,39 @@ export const DepositForm: React.FC<DepositFormProps> = () => {
                 <TokenInfo deposit />
               </HStack>
               <InputGroup marginBottom='5px'>
-                <NumberInput variant='filled' width='80%'>
-                  <NumberInputField
-                    precision={4}
-                    name='amount'
-                    placeholder='Amount to wrap'
-                    value={values.amount}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
+                <NumberInput
+                  value={values.amount}
+                  textColor='white'
+                  placeholder='Amount to wrap'
+                  precision={4}
+                  variant='outline'
+                  width='80%'
+                  onChange={(e) => {
+                    console.log(e);
+                    setFieldValue('amount', e);
+                  }}
+                  onBlur={handleBlur}
+                  min={0}
+                  max={currentUser?.ethBalance ? +currentUser.ethBalance : 0}
+                >
+                  <NumberInputField name='amount' borderRightRadius='none' />
                   <NumberInputStepper>
                     <NumberIncrementStepper />
                     <NumberDecrementStepper />
                   </NumberInputStepper>
                 </NumberInput>
-                <InputRightAddon width='20%'>
+                <InputRightAddon m={0} p={0}>
                   <Button
                     variant='solid'
+                    size='lg'
+                    h='100%'
+                    w='100%'
+                    borderLeftRadius='none'
                     onClick={() => {
                       if (currentUser?.ethBalance) {
-                        console.log(
-                          'Trying to update amountfield: ',
-                          currentUser.ethBalance,
-                        );
                         setFieldValue(
                           'amount',
                           (+currentUser.ethBalance).toPrecision(4),
-                          true,
                         );
                       }
                     }}
@@ -143,10 +151,11 @@ export const DepositForm: React.FC<DepositFormProps> = () => {
               type='submit'
               size='lg'
               block
-              disabled={isSubmitting}
+              isLoading={isSubmitting}
+              loadingText='Submitting'
               width='100%'
             >
-              {isSubmitting ? 'Loading…' : 'Submit'}
+              Submit
             </Button>
           </Form>
         )}
