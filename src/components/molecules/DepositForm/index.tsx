@@ -41,8 +41,6 @@ export const DepositForm: React.FC<DepositFormProps> = () => {
   const { injectedProvider } = useInjectedProvider();
   const { currentUser, setCurrentUser } = useCurrentUser();
   const { contract } = useContract();
-  // const [value, setValue] = useState<string>('');
-  // console.log('Value: ', value);
 
   const onFormSubmit = async (values: Values) => {
     const weiValue = injectedProvider.utils.toWei('' + values.amount);
@@ -90,9 +88,7 @@ export const DepositForm: React.FC<DepositFormProps> = () => {
           values,
           errors,
           touched,
-          handleChange,
           handleBlur,
-          handleSubmit,
           isSubmitting,
           setFieldValue,
         }) => (
@@ -105,20 +101,21 @@ export const DepositForm: React.FC<DepositFormProps> = () => {
               </HStack>
               <InputGroup marginBottom='5px'>
                 <NumberInput
-                  defaultValue={values.amount}
+                  value={values.amount}
+                  textColor='white'
                   placeholder='Amount to wrap'
                   precision={4}
                   variant='outline'
                   width='80%'
-                  onChange={(e) => setFieldValue('amount', e)}
+                  onChange={(e) => {
+                    console.log(e);
+                    setFieldValue('amount', e);
+                  }}
+                  onBlur={handleBlur}
                   min={0}
                   max={currentUser?.ethBalance ? +currentUser.ethBalance : 0}
                 >
-                  <NumberInputField
-                    name='amount'
-                    onBlur={handleBlur}
-                    borderRightRadius='none'
-                  />
+                  <NumberInputField name='amount' borderRightRadius='none' />
                   <NumberInputStepper>
                     <NumberIncrementStepper />
                     <NumberDecrementStepper />

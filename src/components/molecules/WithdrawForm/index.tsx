@@ -41,8 +41,6 @@ export const WithdrawForm: React.FC<WithdrawFormProps> = () => {
   const { injectedProvider } = useInjectedProvider();
   const { currentUser, setCurrentUser } = useCurrentUser();
   const { contract } = useContract();
-  const [value, setValue] = useState<string>('');
-  console.log('Value: ', value);
 
   const onFormSubmit = async (values: Values) => {
     const weiValue = injectedProvider.utils.toWei('' + values.amount);
@@ -73,7 +71,7 @@ export const WithdrawForm: React.FC<WithdrawFormProps> = () => {
     <Container>
       <Formik
         enableReinitialize
-        initialValues={{ amount: value }}
+        initialValues={{ amount: '' }}
         validationSchema={ValidAmount}
         onSubmit={async (values: Values, { setSubmitting, resetForm }) => {
           console.log('values', values);
@@ -92,13 +90,11 @@ export const WithdrawForm: React.FC<WithdrawFormProps> = () => {
           values,
           errors,
           touched,
-          handleChange,
           handleBlur,
-          handleSubmit,
           isSubmitting,
           setFieldValue,
         }) => (
-          <Form onSubmit={handleSubmit}>
+          <Form>
             <FormControl id='withdrawForm' isRequired>
               <HStack>
                 <FormLabel>{currentUser?.network?.chain}</FormLabel>
@@ -107,20 +103,17 @@ export const WithdrawForm: React.FC<WithdrawFormProps> = () => {
               </HStack>
               <InputGroup marginBottom='5px'>
                 <NumberInput
-                  defaultValue={values.amount}
+                  value={values.amount}
                   placeholder='Amount to unwrap'
                   precision={4}
                   variant='outline'
                   width='80%'
                   onChange={(e) => setFieldValue('amount', e)}
+                  onBlur={handleBlur}
                   min={0}
                   max={currentUser?.wethBalance ? +currentUser.wethBalance : 0}
                 >
-                  <NumberInputField
-                    name='amount'
-                    onBlur={handleBlur}
-                    borderRightRadius='none'
-                  />
+                  <NumberInputField name='amount' borderRightRadius='none' />
                   <NumberInputStepper>
                     <NumberIncrementStepper />
                     <NumberDecrementStepper />
