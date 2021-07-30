@@ -1,7 +1,6 @@
 Live Demo on Netlify: https://infallible-wiles-fd5269.netlify.ap
 
 //TODO 1. Set Max button is not updating form 
-//TODO 4. Invalid amount (> than balance) returns unhandled error
 
 Storybook: `yarn storybook`
 App: `yarn start`

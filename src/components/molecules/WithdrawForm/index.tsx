@@ -48,20 +48,24 @@ export const WithdrawForm: React.FC<WithdrawFormProps> = () => {
     const weiValue = injectedProvider.utils.toWei('' + values.amount);
     console.log('weiValue: ', weiValue);
     if (currentUser && contract) {
-      await contract.methods
-        .withdraw(weiValue)
-        .send({ from: currentUser?.username });
+      try {
+        await contract.methods
+          .withdraw(weiValue)
+          .send({ from: currentUser?.username });
 
-      //TODO updating balances and typing
-      const updatedUser: User = {
-        ...currentUser,
-        ...{
-          wethBalance: (+currentUser.wethBalance - +values.amount).toString(),
-          ethBalance: (+currentUser.ethBalance + +values.amount).toString(),
-        },
-      };
+        //TODO updating balances and typing
+        const updatedUser: User = {
+          ...currentUser,
+          ...{
+            wethBalance: (+currentUser.wethBalance - +values.amount).toString(),
+            ethBalance: (+currentUser.ethBalance + +values.amount).toString(),
+          },
+        };
 
-      setCurrentUser(updatedUser);
+        setCurrentUser(updatedUser);
+      } catch (e) {
+        console.log('Error: ', e);
+      }
     }
   };
 
