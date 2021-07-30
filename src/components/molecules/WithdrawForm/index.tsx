@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Formik, Form } from 'formik';
 import { useInjectedProvider } from '../../../contexts/injectedProviderContext';
@@ -41,6 +41,8 @@ export const WithdrawForm: React.FC<WithdrawFormProps> = () => {
   const { injectedProvider } = useInjectedProvider();
   const { currentUser, setCurrentUser } = useCurrentUser();
   const { contract } = useContract();
+  const [value, setValue] = useState<string>('');
+  console.log('Value: ', value);
 
   const onFormSubmit = async (values: Values) => {
     const weiValue = injectedProvider.utils.toWei('' + values.amount);
@@ -63,12 +65,19 @@ export const WithdrawForm: React.FC<WithdrawFormProps> = () => {
     }
   };
 
+  const onSetMax = () => {
+    console.log('onSetMax was called: ', currentUser);
+    if (currentUser?.ethBalance) {
+      setValue((+currentUser.ethBalance).toPrecision(4));
+      console.log('state was updated');
+    }
+  };
+
   return (
     <Container>
       <Formik
-        initialValues={{
-          amount: '',
-        }}
+        enableReinitialize
+        initialValues={{ amount: value }}
         validationSchema={ValidAmount}
         onSubmit={async (values: Values, { setSubmitting, resetForm }) => {
           console.log('values', values);
@@ -91,7 +100,6 @@ export const WithdrawForm: React.FC<WithdrawFormProps> = () => {
           handleBlur,
           handleSubmit,
           isSubmitting,
-          setFieldValue,
         }) => (
           <Form onSubmit={handleSubmit}>
             <FormControl id='withdrawForm' isRequired>
@@ -116,17 +124,7 @@ export const WithdrawForm: React.FC<WithdrawFormProps> = () => {
                   </NumberInputStepper>
                 </NumberInput>
                 <InputRightAddon width='20%'>
-                  <Button
-                    variant='solid'
-                    onClick={() => {
-                      if (currentUser?.wethBalance) {
-                        setFieldValue(
-                          'amount',
-                          (+currentUser?.wethBalance).toPrecision(4),
-                        );
-                      }
-                    }}
-                  >
+                  <Button variant='solid' onClick={() => onSetMax()}>
                     Set Max
                   </Button>
                 </InputRightAddon>

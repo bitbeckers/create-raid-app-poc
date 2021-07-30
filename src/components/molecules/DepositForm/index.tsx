@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Formik, Form } from 'formik';
 import { useInjectedProvider } from '../../../contexts/injectedProviderContext';
@@ -41,24 +41,38 @@ export const DepositForm: React.FC<DepositFormProps> = () => {
   const { injectedProvider } = useInjectedProvider();
   const { currentUser, setCurrentUser } = useCurrentUser();
   const { contract } = useContract();
+  const [value, setValue] = useState<string>('');
+  console.log('Value: ', value);
 
   const onFormSubmit = async (values: Values) => {
     const weiValue = injectedProvider.utils.toWei('' + values.amount);
     if (currentUser && contract) {
-      await contract.methods
-        .deposit()
-        .send({ value: weiValue, from: currentUser?.username });
+      try {
+        await contract.methods
+          .deposit()
+          .send({ value: weiValue, from: currentUser?.username });
 
-      //TODO updating balances and typing
-      const updatedUser: User = {
-        ...currentUser,
-        ...{
-          wethBalance: (+currentUser.wethBalance + +values.amount).toString(),
-          ethBalance: (+currentUser.ethBalance - +values.amount).toString(),
-        },
-      };
+        //TODO updating balances and typing
+        const updatedUser: User = {
+          ...currentUser,
+          ...{
+            wethBalance: (+currentUser.wethBalance + +values.amount).toString(),
+            ethBalance: (+currentUser.ethBalance - +values.amount).toString(),
+          },
+        };
 
-      setCurrentUser(updatedUser);
+        setCurrentUser(updatedUser);
+      } catch (e) {
+        console.log('Error: ', e);
+      }
+    }
+  };
+
+  const onSetMax = () => {
+    console.log('onSetMax was called: ', currentUser);
+    if (currentUser?.ethBalance) {
+      setValue((+currentUser.ethBalance).toPrecision(4));
+      console.log('state was updated');
     }
   };
 
@@ -66,7 +80,7 @@ export const DepositForm: React.FC<DepositFormProps> = () => {
     <Container>
       <Formik
         enableReinitialize
-        initialValues={{ amount: '' }}
+        initialValues={{ amount: value }}
         validationSchema={ValidAmount}
         onSubmit={async (values: Values, { setSubmitting, resetForm }) => {
           setSubmitting(true);
@@ -88,7 +102,6 @@ export const DepositForm: React.FC<DepositFormProps> = () => {
           handleBlur,
           handleSubmit,
           isSubmitting,
-          setFieldValue,
         }) => (
           <Form onSubmit={handleSubmit}>
             <FormControl id='depositForm' isRequired>
@@ -98,12 +111,15 @@ export const DepositForm: React.FC<DepositFormProps> = () => {
                 <TokenInfo deposit />
               </HStack>
               <InputGroup marginBottom='5px'>
-                <NumberInput variant='filled' width='80%'>
+                <NumberInput
+                  defaultValue={values.amount}
+                  variant='outline'
+                  width='80%'
+                >
                   <NumberInputField
                     precision={4}
                     name='amount'
                     placeholder='Amount to wrap'
-                    value={values.amount}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
@@ -113,22 +129,7 @@ export const DepositForm: React.FC<DepositFormProps> = () => {
                   </NumberInputStepper>
                 </NumberInput>
                 <InputRightAddon width='20%'>
-                  <Button
-                    variant='solid'
-                    onClick={() => {
-                      if (currentUser?.ethBalance) {
-                        console.log(
-                          'Trying to update amountfield: ',
-                          currentUser.ethBalance,
-                        );
-                        setFieldValue(
-                          'amount',
-                          (+currentUser.ethBalance).toPrecision(4),
-                          true,
-                        );
-                      }
-                    }}
-                  >
+                  <Button variant='solid' onClick={() => onSetMax()}>
                     Set Max
                   </Button>
                 </InputRightAddon>
