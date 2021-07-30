@@ -41,8 +41,8 @@ export const DepositForm: React.FC<DepositFormProps> = () => {
   const { injectedProvider } = useInjectedProvider();
   const { currentUser, setCurrentUser } = useCurrentUser();
   const { contract } = useContract();
-  const [value, setValue] = useState<string>('');
-  console.log('Value: ', value);
+  // const [value, setValue] = useState<string>('');
+  // console.log('Value: ', value);
 
   const onFormSubmit = async (values: Values) => {
     const weiValue = injectedProvider.utils.toWei('' + values.amount);
@@ -68,19 +68,11 @@ export const DepositForm: React.FC<DepositFormProps> = () => {
     }
   };
 
-  const onSetMax = () => {
-    console.log('onSetMax was called: ', currentUser);
-    if (currentUser?.ethBalance) {
-      setValue((+currentUser.ethBalance).toPrecision(4));
-      console.log('state was updated');
-    }
-  };
-
   return (
     <Container>
       <Formik
         enableReinitialize
-        initialValues={{ amount: value }}
+        initialValues={{ amount: '' }}
         validationSchema={ValidAmount}
         onSubmit={async (values: Values, { setSubmitting, resetForm }) => {
           setSubmitting(true);
@@ -102,8 +94,9 @@ export const DepositForm: React.FC<DepositFormProps> = () => {
           handleBlur,
           handleSubmit,
           isSubmitting,
+          setFieldValue,
         }) => (
-          <Form onSubmit={handleSubmit}>
+          <Form>
             <FormControl id='depositForm' isRequired>
               <HStack>
                 <FormLabel>{currentUser?.network?.chain}</FormLabel>
@@ -113,23 +106,40 @@ export const DepositForm: React.FC<DepositFormProps> = () => {
               <InputGroup marginBottom='5px'>
                 <NumberInput
                   defaultValue={values.amount}
+                  placeholder='Amount to wrap'
+                  precision={4}
                   variant='outline'
                   width='80%'
+                  onChange={(e) => setFieldValue('amount', e)}
+                  min={0}
+                  max={currentUser?.ethBalance ? +currentUser.ethBalance : 0}
                 >
                   <NumberInputField
-                    precision={4}
                     name='amount'
-                    placeholder='Amount to wrap'
-                    onChange={handleChange}
                     onBlur={handleBlur}
+                    borderRightRadius='none'
                   />
                   <NumberInputStepper>
                     <NumberIncrementStepper />
                     <NumberDecrementStepper />
                   </NumberInputStepper>
                 </NumberInput>
-                <InputRightAddon width='20%'>
-                  <Button variant='solid' onClick={() => onSetMax()}>
+                <InputRightAddon m={0} p={0}>
+                  <Button
+                    variant='solid'
+                    size='lg'
+                    h='100%'
+                    w='100%'
+                    borderLeftRadius='none'
+                    onClick={() => {
+                      if (currentUser?.ethBalance) {
+                        setFieldValue(
+                          'amount',
+                          (+currentUser.ethBalance).toPrecision(4),
+                        );
+                      }
+                    }}
+                  >
                     Set Max
                   </Button>
                 </InputRightAddon>
@@ -144,10 +154,11 @@ export const DepositForm: React.FC<DepositFormProps> = () => {
               type='submit'
               size='lg'
               block
-              disabled={isSubmitting}
+              isLoading={isSubmitting}
+              loadingText='Submitting'
               width='100%'
             >
-              {isSubmitting ? 'Loading…' : 'Submit'}
+              Submit
             </Button>
           </Form>
         )}

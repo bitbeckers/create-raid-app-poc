@@ -69,14 +69,6 @@ export const WithdrawForm: React.FC<WithdrawFormProps> = () => {
     }
   };
 
-  const onSetMax = () => {
-    console.log('onSetMax was called: ', currentUser);
-    if (currentUser?.ethBalance) {
-      setValue((+currentUser.ethBalance).toPrecision(4));
-      console.log('state was updated');
-    }
-  };
-
   return (
     <Container>
       <Formik
@@ -104,6 +96,7 @@ export const WithdrawForm: React.FC<WithdrawFormProps> = () => {
           handleBlur,
           handleSubmit,
           isSubmitting,
+          setFieldValue,
         }) => (
           <Form onSubmit={handleSubmit}>
             <FormControl id='withdrawForm' isRequired>
@@ -113,22 +106,42 @@ export const WithdrawForm: React.FC<WithdrawFormProps> = () => {
                 <TokenInfo deposit={false} />
               </HStack>
               <InputGroup marginBottom='5px'>
-                <NumberInput variant='filled' width='80%'>
+                <NumberInput
+                  defaultValue={values.amount}
+                  placeholder='Amount to unwrap'
+                  precision={4}
+                  variant='outline'
+                  width='80%'
+                  onChange={(e) => setFieldValue('amount', e)}
+                  min={0}
+                  max={currentUser?.wethBalance ? +currentUser.wethBalance : 0}
+                >
                   <NumberInputField
-                    precision={4}
                     name='amount'
-                    placeholder='Amount to unwrap'
-                    value={values.amount}
-                    onChange={handleChange}
                     onBlur={handleBlur}
+                    borderRightRadius='none'
                   />
                   <NumberInputStepper>
                     <NumberIncrementStepper />
                     <NumberDecrementStepper />
                   </NumberInputStepper>
                 </NumberInput>
-                <InputRightAddon width='20%'>
-                  <Button variant='solid' onClick={() => onSetMax()}>
+                <InputRightAddon m={0} p={0}>
+                  <Button
+                    variant='solid'
+                    size='lg'
+                    h='100%'
+                    w='100%'
+                    borderLeftRadius='none'
+                    onClick={() => {
+                      if (currentUser?.ethBalance) {
+                        setFieldValue(
+                          'amount',
+                          (+currentUser.ethBalance).toPrecision(4),
+                        );
+                      }
+                    }}
+                  >
                     Set Max
                   </Button>
                 </InputRightAddon>
@@ -141,7 +154,8 @@ export const WithdrawForm: React.FC<WithdrawFormProps> = () => {
               variant='solid'
               type='submit'
               size='lg'
-              disabled={isSubmitting}
+              isLoading={isSubmitting}
+              loadingText='Submitting'
               width='100%'
             >
               {isSubmitting ? 'Loading…' : 'Submit'}
