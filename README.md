@@ -1,7 +1,5 @@
 Live Demo on Netlify: https://infallible-wiles-fd5269.netlify.ap
 
-//TODO 1. Set Max button is not updating form 
-
 Storybook: `yarn storybook`
 App: `yarn start`
 
