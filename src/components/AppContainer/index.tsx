@@ -5,7 +5,7 @@ import { ButtonGroup } from '../molecules/ButtonGroup';
 import { Header } from '../atoms/Header';
 import { SidePanel } from '../atoms/SidePanel';
 
-import { Container, Flex, Spacer, Image, Text, Center } from '@chakra-ui/react';
+import { Container, Flex, Spacer, Image, Text } from '@chakra-ui/react';
 
 import footerImage from '../../assets/raidguild_mark.png';
 import raidGuildLogoLeft from '../../assets/raid--left.png';
@@ -26,9 +26,6 @@ export interface AppContainerProps {
 /**
  * Primary UI component for user interaction
  */
-//TODO Set max button not updating form
-//TODO When 'Wrap' selected, set TokenInfo to Wrap
-//TODO invalid value returning unhandled error
 export const AppContainer: React.FC<AppContainerProps> = ({ children }) => {
   const { currentUser } = useCurrentUser();
 

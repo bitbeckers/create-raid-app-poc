@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Formik, Form } from 'formik';
 import { useInjectedProvider } from '../../../contexts/injectedProviderContext';
