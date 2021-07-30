@@ -40,7 +40,7 @@ export const ContractContextProvider: React.FC<ContractProps> = ({
     const initContract = async () => {
       console.log('network name', injectedChain.network);
       try {
-        const contract: Contract = new injectedProvider.eth.Contract(
+        const contract: Contract = await new injectedProvider.eth.Contract(
           WethAbi,
           wethAddrs[injectedChain.network],
         );

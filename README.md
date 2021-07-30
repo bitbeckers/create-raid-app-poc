@@ -1,4 +1,10 @@
-Live Demo on Netlify: https://infallible-wiles-fd5269.netlify.app
+Live Demo on Netlify: https://infallible-wiles-fd5269.netlify.ap
+
+//TODO my balances aren't populating. getting a contract error, address not set yet. metamask in firefox.
+//TODO 1. Set Max button is not updating form 
+//TODO 2. Sometimes during initial loggin the ‘Wrap’-form shows wETH instead of ETH balance. 
+//TODO 3. Logging out the user does not update the connect button (now you need some good ol’ manual F5) - DONE
+//TODO 4. Invalid amount (> than balance) returns unhandled error
 
 Storybook: `yarn storybook`
 App: `yarn start`

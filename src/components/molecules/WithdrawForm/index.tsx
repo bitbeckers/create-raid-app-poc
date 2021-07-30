@@ -44,10 +44,11 @@ export const WithdrawForm: React.FC<WithdrawFormProps> = () => {
 
   const onFormSubmit = async (values: Values) => {
     const weiValue = injectedProvider.utils.toWei('' + values.amount);
+    console.log('weiValue: ', weiValue);
     if (currentUser && contract) {
       await contract.methods
-        .withdraw()
-        .send({ value: weiValue, from: currentUser?.username });
+        .withdraw(weiValue)
+        .send({ from: currentUser?.username });
 
       //TODO updating balances and typing
       const updatedUser: User = {
@@ -70,6 +71,7 @@ export const WithdrawForm: React.FC<WithdrawFormProps> = () => {
         }}
         validationSchema={ValidAmount}
         onSubmit={async (values: Values, { setSubmitting, resetForm }) => {
+          console.log('values', values);
           setSubmitting(true);
           try {
             onFormSubmit(values);
@@ -137,7 +139,6 @@ export const WithdrawForm: React.FC<WithdrawFormProps> = () => {
               variant='solid'
               type='submit'
               size='lg'
-              block
               disabled={isSubmitting}
               width='100%'
             >

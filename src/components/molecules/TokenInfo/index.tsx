@@ -23,30 +23,35 @@ export const TokenInfo: React.FC<TokenInfoProps> = ({ deposit }) => {
 
   useEffect(() => {
     if (contract && currentUser && injectedProvider) {
+      console.log('contract', contract);
       const getInfo = async () => {
-        // set wETH balance
-        const wethBalanceInWei: string = await contract?.methods
-          .balanceOf(currentUser?.username)
-          .call()
-          .then((response: string | BN) => response.toString());
-        const wethBalance: string = injectedProvider.utils
-          .fromWei('' + wethBalanceInWei)
-          .toString();
-
-        // get Eth Balance
-        const ethBalanceInWei: string = await injectedProvider.eth
-          .getBalance(currentUser?.username)
-          .then((response: string | BN) => response.toString());
-        const ethBalance = injectedProvider.utils.fromWei('' + ethBalanceInWei);
-
-        setCurrentUser({ ...currentUser, ...{ wethBalance, ethBalance } });
+        try {
+          // set wETH balance
+          const wethBalanceInWei: string = await contract?.methods
+            .balanceOf(currentUser?.username)
+            .call()
+            .then((response: string | BN) => response.toString());
+          const wethBalance: string = injectedProvider.utils
+            .fromWei('' + wethBalanceInWei)
+            .toString();
+          // get Eth Balance
+          const ethBalanceInWei: string = await injectedProvider.eth
+            .getBalance(currentUser?.username)
+            .then((response: string | BN) => response.toString());
+          const ethBalance = injectedProvider.utils.fromWei(
+            '' + ethBalanceInWei,
+          );
+          setCurrentUser({ ...currentUser, ...{ wethBalance, ethBalance } });
+        } catch (e) {
+          console.log('Error: ', e);
+        }
       };
 
       getInfo();
     }
 
     // eslint-disable-next-line
-  }, [contract, currentUser]);
+  }, [contract]);
 
   const forDisplay = (number: string | undefined): string => {
     return number ? (+number).toFixed(4) : 'Fetching ...';

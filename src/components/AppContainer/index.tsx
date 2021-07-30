@@ -32,7 +32,7 @@ export interface AppContainerProps {
 export const AppContainer: React.FC<AppContainerProps> = ({ children }) => {
   const { currentUser } = useCurrentUser();
 
-  const [deposit, setDeposit] = useState<boolean>(false);
+  const [deposit, setDeposit] = useState<boolean>(true);
 
   const onButtonSelection = (index: number) => {
     switch (index) {
@@ -71,27 +71,24 @@ export const AppContainer: React.FC<AppContainerProps> = ({ children }) => {
         </Header>
         <ButtonGroup
           buttons={[`Wrap ${networkName}`, `Unwrap w${networkName}`]}
+          defaultSelected={deposit ? 0 : 1}
           isAttached
           onSelect={onButtonSelection}
         />
-        {deposit && (
-          <Center marginTop='10px'>
-            {currentUser?.username ? (
+        <Container centerContent marginTop='10px'>
+          {deposit ? (
+            currentUser?.username ? (
               <DepositForm />
             ) : (
               <Text>Connect to Wrap {networkName}</Text>
-            )}
-          </Center>
-        )}
-        {!deposit && (
-          <Center marginTop='10px'>
-            {currentUser?.username ? (
-              <WithdrawForm />
-            ) : (
-              <Text>Connect to Unwrap w{networkName}</Text>
-            )}
-          </Center>
-        )}
+            )
+          ) : currentUser?.username ? (
+            <WithdrawForm />
+          ) : (
+            <Text>Connect to Unwrap w{networkName}</Text>
+          )}
+        </Container>
+
         <Spacer />
 
         <Footer>
