@@ -6,8 +6,9 @@ import React, {
   useRef,
 } from 'react';
 import Web3 from 'web3';
-import Web3Modal from 'web3modal';
+// import Web3Modal from 'web3modal';
 import { Network } from '../types';
+import { SafeAppWeb3Modal } from '@gnosis.pm/safe-apps-web3modal';
 
 import { supportedChains } from '../utils/chain';
 import {
@@ -17,7 +18,7 @@ import {
 } from '../utils/web3Modal';
 
 //TODO refactor to Ethers
-const defaultModal = new Web3Modal({
+const defaultModal = new SafeAppWeb3Modal({
   providerOptions: getProviderOptions(),
   cacheProvider: true,
   theme: 'dark',
@@ -62,7 +63,7 @@ export const InjectedProvider: React.FC<InjectedProviderProps> = ({
       return;
     }
 
-    const localWeb3Modal = new Web3Modal({
+    const localWeb3Modal = new SafeAppWeb3Modal({
       providerOptions,
       cacheProvider: true,
       theme: 'dark',
