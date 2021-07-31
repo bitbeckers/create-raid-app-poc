@@ -27,9 +27,9 @@ export const InjectedProviderContext = createContext<{
   injectedProvider?: any;
   requestWallet?: any;
   disconnectDapp?: any;
-  injectedChain?: Network;
+  injectedChain?: any;
   address?: any;
-  web3Modal?: SafeAppWeb3Modal;
+  web3Modal?: any;
   state?: any;
   dispatch?: React.Dispatch<any>;
 }>({});
@@ -69,7 +69,7 @@ export const InjectedProvider: React.FC<InjectedProviderProps> = ({
     });
 
     const provider = await localWeb3Modal.requestProvider();
-    console.log("Provider: ", provider);
+    console.log('Provider: ', provider);
     provider.selectedAddress = deriveSelectedAddress(provider);
     const chainId = deriveChainId(provider);
 
