@@ -1,4 +1,5 @@
-Live Demo on Netlify: https://infallible-wiles-fd5269.netlify.ap
+Live Demo on Netlify: https://infallible-wiles-fd5269.netlify.app
+Live Demo on IPFS: https://wild-sound-3616.on.fleek.co
 
 Storybook: `yarn storybook`
 App: `yarn start`

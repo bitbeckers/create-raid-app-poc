@@ -6,7 +6,6 @@ import React, {
   useRef,
 } from 'react';
 import Web3 from 'web3';
-// import Web3Modal from 'web3modal';
 import { Network } from '../types';
 import { SafeAppWeb3Modal } from '@gnosis.pm/safe-apps-web3modal';
 
@@ -69,7 +68,7 @@ export const InjectedProvider: React.FC<InjectedProviderProps> = ({
       theme: 'dark',
     });
 
-    const provider = await localWeb3Modal.connect();
+    const provider = await localWeb3Modal.requestProvider();
     provider.selectedAddress = deriveSelectedAddress(provider);
     const chainId = deriveChainId(provider);
 
