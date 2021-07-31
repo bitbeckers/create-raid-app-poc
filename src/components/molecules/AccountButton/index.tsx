@@ -19,9 +19,8 @@ export const AccountButton: React.FC<AccountButtonProps> = ({ children }) => {
   const { requestWallet, disconnectDapp } = useInjectedProvider();
   const { currentUser } = useCurrentUser();
 
-  const connectWallet = () => {
-    console.log('Connecting wallet');
-    requestWallet();
+  const connectWallet = async () => {
+    await requestWallet();
   };
 
   return currentUser?.username ? (
