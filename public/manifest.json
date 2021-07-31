@@ -1,6 +1,9 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Wrapeth",
+  "name": "Wrapeth",
+  "description": "Also a Gnosis Safe App here",
+  "iconPath": "swords-mid.svg",
+  "providedBy": {"name": "Raid Guild", "url": "https://raidguild.com"},
   "icons": [
     {
       "src": "favicon.ico",
