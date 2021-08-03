@@ -52,22 +52,34 @@ export const getProviderOptions = () =>
   addNetworkProviders(attemptInjectedChainData());
 
 export const deriveChainId = (provider: any) => {
+
   if (provider.isMetaMask) {
     return provider.chainId;
   }
+
   if (provider.wc) {
     return chainByNetworkId(provider.chainId).chain_id;
   }
   // else if (provider.isPortis) {
   //   return chainByNetworkId(provider._portis.config.network.chainId).chain_id;
   // }
+
+  if (provider.safe) {
+    return chainByNetworkId(provider.safe.chainId).chain_id;
+  }
+  
   return null;
 };
 
 export const deriveSelectedAddress = (provider: any) => {
+  if (provider.safe) {
+    return provider.safe.safeAddress;
+  }
+
   if (provider.isMetaMask) {
     return provider.selectedAddress;
   }
+
   if (provider.wc) {
     return provider.accounts[0];
   }
