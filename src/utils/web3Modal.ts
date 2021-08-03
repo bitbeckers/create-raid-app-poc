@@ -52,7 +52,6 @@ export const getProviderOptions = () =>
   addNetworkProviders(attemptInjectedChainData());
 
 export const deriveChainId = (provider: any) => {
-
   if (provider.isMetaMask) {
     return provider.chainId;
   }
@@ -67,7 +66,7 @@ export const deriveChainId = (provider: any) => {
   if (provider.safe) {
     return chainByNetworkId(provider.safe.chainId).chain_id;
   }
-  
+
   return null;
 };
 
