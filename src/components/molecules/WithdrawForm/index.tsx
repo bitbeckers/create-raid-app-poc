@@ -127,10 +127,10 @@ export const WithdrawForm: React.FC<WithdrawFormProps> = () => {
                     w='100%'
                     borderLeftRadius='none'
                     onClick={() => {
-                      if (currentUser?.ethBalance) {
+                      if (currentUser?.wethBalance) {
                         setFieldValue(
                           'amount',
-                          (+currentUser.ethBalance).toPrecision(4),
+                          (+currentUser.wethBalance).toPrecision(4),
                         );
                       }
                     }}
