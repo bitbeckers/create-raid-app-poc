@@ -80,10 +80,16 @@ export const InjectedProvider: React.FC<InjectedProviderProps> = ({
     console.log('connecting provider');
     const web3: any = new Web3(provider);
     console.log('Web3 instance: ', web3);
-    if (web3?.currentProvider?.selectedAddress) {
+    if (
+      web3?.currentProvider?.selectedAddress ||
+      web3?.currentProvider?.safe?.safeAddress
+    ) {
+      const address = web3?.currentProvider?.selectedAddress
+        ? web3?.currentProvider?.selectedAddress
+        : web3?.currentProvider?.safe?.safeAddress;
       setInjectedProvider(web3);
       // setPageState('injectedProvider', web3);
-      setAddress(web3.currentProvider.selectedAddress);
+      setAddress(address);
       setInjectedChain(chain);
       setWeb3Modal(localWeb3Modal);
     }
