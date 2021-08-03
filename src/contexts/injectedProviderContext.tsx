@@ -105,35 +105,43 @@ export const InjectedProvider: React.FC<InjectedProviderProps> = ({
   // https://eips.ethereum.org/EIPS/eip-1193
 
   useEffect(() => {
-    const handleChainChange = () => {
-      console.log('CHAIN CHANGE');
-      connectProvider();
-    };
-    const accountsChanged = () => {
-      console.log('ACCOUNT CHANGE');
-      connectProvider();
-    };
+    const addListenersToProvider = async () => {
+      const safeApp = await web3Modal.isSafeApp();
+      if (!safeApp) {
+        const handleChainChange = () => {
+          console.log('CHAIN CHANGE');
+          connectProvider();
+        };
+        const accountsChanged = () => {
+          console.log('ACCOUNT CHANGE');
+          connectProvider();
+        };
 
-    const unsub = () => {
-      if (injectedProvider?.currentProvider) {
-        injectedProvider.currentProvider.removeListener(
-          'accountsChanged',
-          handleChainChange,
-        );
-        injectedProvider.currentProvider.removeListener(
-          'chainChanged',
-          accountsChanged,
-        );
+        const unsub = () => {
+          if (injectedProvider?.currentProvider) {
+            injectedProvider.currentProvider.removeListener(
+              'accountsChanged',
+              handleChainChange,
+            );
+            injectedProvider.currentProvider.removeListener(
+              'chainChanged',
+              accountsChanged,
+            );
+          }
+        };
+
+        if (injectedProvider?.currentProvider && !hasListeners.current) {
+          console.log('InjectedProvider: ', injectedProvider);
+          injectedProvider.currentProvider
+            .on('accountsChanged', accountsChanged)
+            .on('chainChanged', handleChainChange);
+          hasListeners.current = true;
+        }
+        return () => unsub();
       }
     };
 
-    if (injectedProvider?.currentProvider && !hasListeners.current) {
-      injectedProvider.currentProvider
-        .on('accountsChanged', accountsChanged)
-        .on('chainChanged', handleChainChange);
-      hasListeners.current = true;
-    }
-    return () => unsub();
+    addListenersToProvider();
   }, [injectedProvider]);
 
   const requestWallet = async () => {
