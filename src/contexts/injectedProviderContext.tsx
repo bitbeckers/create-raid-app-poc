@@ -79,6 +79,7 @@ export const InjectedProvider: React.FC<InjectedProviderProps> = ({
     };
     console.log('connecting provider');
     const web3: any = new Web3(provider);
+    console.log('Web3 instance: ', web3);
     if (web3?.currentProvider?.selectedAddress) {
       setInjectedProvider(web3);
       // setPageState('injectedProvider', web3);
