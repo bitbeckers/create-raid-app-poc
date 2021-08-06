@@ -27,7 +27,6 @@ export const CurrentUserContextProvider: React.FC<CurrentUserProps> = ({
   useEffect(() => {
     const user: User = createWeb3User(address, injectedChain);
 
-    console.log('User: ', user);
     setCurrentUser(user);
   }, [injectedProvider, injectedChain, address]);
 

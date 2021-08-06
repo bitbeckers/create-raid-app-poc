@@ -57,8 +57,6 @@ export const TokenInfo: React.FC<TokenInfoProps> = ({ deposit }) => {
     return number ? (+number).toFixed(4) : 'Fetching ...';
   };
 
-  console.log('CurrentUSer: ', currentUser);
-
   return deposit ? (
     <Button variant='ghost'>
       {`${currentUser?.network?.chain} Balance:
