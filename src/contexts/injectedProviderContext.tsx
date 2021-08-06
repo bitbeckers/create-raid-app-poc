@@ -6,7 +6,6 @@ import React, {
   useRef,
 } from 'react';
 import Web3 from 'web3';
-// import Web3Modal from 'web3modal';
 import { Network } from '../types';
 import { SafeAppWeb3Modal } from '@gnosis.pm/safe-apps-web3modal';
 
@@ -69,7 +68,8 @@ export const InjectedProvider: React.FC<InjectedProviderProps> = ({
       theme: 'dark',
     });
 
-    const provider = await localWeb3Modal.connect();
+    const provider = await localWeb3Modal.requestProvider();
+    console.log('Provider: ', provider);
     provider.selectedAddress = deriveSelectedAddress(provider);
     const chainId = deriveChainId(provider);
 
@@ -79,10 +79,17 @@ export const InjectedProvider: React.FC<InjectedProviderProps> = ({
     };
     console.log('connecting provider');
     const web3: any = new Web3(provider);
-    if (web3?.currentProvider?.selectedAddress) {
+    console.log('Web3 instance: ', web3);
+    if (
+      web3?.currentProvider?.selectedAddress ||
+      web3?.currentProvider?.safe?.safeAddress
+    ) {
+      const address = web3?.currentProvider?.selectedAddress
+        ? web3?.currentProvider?.selectedAddress
+        : web3?.currentProvider?.safe?.safeAddress;
       setInjectedProvider(web3);
       // setPageState('injectedProvider', web3);
-      setAddress(web3.currentProvider.selectedAddress);
+      setAddress(address);
       setInjectedChain(chain);
       setWeb3Modal(localWeb3Modal);
     }
@@ -98,35 +105,43 @@ export const InjectedProvider: React.FC<InjectedProviderProps> = ({
   // https://eips.ethereum.org/EIPS/eip-1193
 
   useEffect(() => {
-    const handleChainChange = () => {
-      console.log('CHAIN CHANGE');
-      connectProvider();
-    };
-    const accountsChanged = () => {
-      console.log('ACCOUNT CHANGE');
-      connectProvider();
-    };
+    const addListenersToProvider = async () => {
+      const safeApp = await web3Modal.isSafeApp();
+      if (!safeApp) {
+        const handleChainChange = () => {
+          console.log('CHAIN CHANGE');
+          connectProvider();
+        };
+        const accountsChanged = () => {
+          console.log('ACCOUNT CHANGE');
+          connectProvider();
+        };
 
-    const unsub = () => {
-      if (injectedProvider?.currentProvider) {
-        injectedProvider.currentProvider.removeListener(
-          'accountsChanged',
-          handleChainChange,
-        );
-        injectedProvider.currentProvider.removeListener(
-          'chainChanged',
-          accountsChanged,
-        );
+        const unsub = () => {
+          if (injectedProvider?.currentProvider) {
+            injectedProvider.currentProvider.removeListener(
+              'accountsChanged',
+              handleChainChange,
+            );
+            injectedProvider.currentProvider.removeListener(
+              'chainChanged',
+              accountsChanged,
+            );
+          }
+        };
+
+        if (injectedProvider?.currentProvider && !hasListeners.current) {
+          console.log('InjectedProvider: ', injectedProvider);
+          injectedProvider.currentProvider
+            .on('accountsChanged', accountsChanged)
+            .on('chainChanged', handleChainChange);
+          hasListeners.current = true;
+        }
+        return () => unsub();
       }
     };
 
-    if (injectedProvider?.currentProvider && !hasListeners.current) {
-      injectedProvider.currentProvider
-        .on('accountsChanged', accountsChanged)
-        .on('chainChanged', handleChainChange);
-      hasListeners.current = true;
-    }
-    return () => unsub();
+    addListenersToProvider();
   }, [injectedProvider]);
 
   const requestWallet = async () => {

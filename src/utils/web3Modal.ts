@@ -24,7 +24,7 @@ const addNetworkProviders = (chainData: any) => {
           4: `https://rinkeby.infura.io/v3/${process.env.REACT_APP_RPC_KEY}`,
           42: `https://kovan.infura.io/v3/${process.env.REACT_APP_RPC_KEY}`,
           100: 'https://dai.poa.network',
-          137: 'https://rpc-mainnet.maticvigil.com',
+          137: `https://polygon-mainnet.infura.io/v3/${process.env.REACT_APP_RPC_KEY}`,
         },
       },
     };
@@ -55,19 +55,30 @@ export const deriveChainId = (provider: any) => {
   if (provider.isMetaMask) {
     return provider.chainId;
   }
+
   if (provider.wc) {
     return chainByNetworkId(provider.chainId).chain_id;
   }
   // else if (provider.isPortis) {
   //   return chainByNetworkId(provider._portis.config.network.chainId).chain_id;
   // }
+
+  if (provider.safe) {
+    return chainByNetworkId(provider.safe.chainId).chain_id;
+  }
+
   return null;
 };
 
 export const deriveSelectedAddress = (provider: any) => {
+  if (provider.safe) {
+    return provider.safe.safeAddress;
+  }
+
   if (provider.isMetaMask) {
     return provider.selectedAddress;
   }
+
   if (provider.wc) {
     return provider.accounts[0];
   }
