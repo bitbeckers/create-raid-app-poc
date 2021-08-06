@@ -1,9 +1,9 @@
 {
-  "short_name": "Wrapeth",
-  "name": "Wrapeth",
-  "description": "Also a Gnosis Safe App here",
-  "iconPath": "swords-mid.svg",
-  "providedBy": {"name": "Raid Guild", "url": "https://raidguild.com"},
+  "short_name": "WrapEth",
+  "name": "WrapEth",
+  "description": "No fees, no frills ETH wrapper",
+  "iconPath": "logo192.png",
+  "providedBy": {"name": "Raid Guild", "url": "https://raidguild.org"},
   "icons": [
     {
       "src": "favicon.ico",

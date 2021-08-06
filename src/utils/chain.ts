@@ -62,8 +62,8 @@ export const supportedChains: SupportedChains = {
     network_id: 137,
     chain_id: '0x89',
     providers: ['walletconnect'],
-    rpc_url: 'https://rpc-mainnet.maticvigil.com',
-    block_explorer: 'https://explorer-mainnet.maticvigil.com',
+    rpc_url: `https://polygon-mainnet.infura.io/v3/${process.env.REACT_APP_RPC_KEY}`,
+    block_explorer: 'https://polygonscan.com',
   },
 };
 

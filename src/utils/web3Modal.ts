@@ -24,7 +24,7 @@ const addNetworkProviders = (chainData: any) => {
           4: `https://rinkeby.infura.io/v3/${process.env.REACT_APP_RPC_KEY}`,
           42: `https://kovan.infura.io/v3/${process.env.REACT_APP_RPC_KEY}`,
           100: 'https://dai.poa.network',
-          137: 'https://rpc-mainnet.maticvigil.com',
+          137: `https://polygon-mainnet.infura.io/v3/${process.env.REACT_APP_RPC_KEY}`,
         },
       },
     };
